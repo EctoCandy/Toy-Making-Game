@@ -1,2 +1,2 @@
-# Toy-Making-Game
-Team submission for JuniperDev's Very Serious Game Jam
+# Serious-Game-Jam
+Ramen's, EctoCandy's, Rorta's and MaezkHeart's submition to the Juniper Serious Game Jam

@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://csnltdttfxamx"]
+
+[ext_resource type="Script" uid="uid://ddsv6wd8hfr07" path="res://Scripts/HandCrank/hand_crank.gd" id="1_2ycgn"]
+[ext_resource type="Texture2D" uid="uid://cpoyndigbstbl" path="res://Assets/Art/crank_handle.png" id="1_e6f0s"]
+[ext_resource type="Texture2D" uid="uid://dlu14x7p5p0dp" path="res://Assets/Art/blank_rect.png" id="1_p1uua"]
+[ext_resource type="Texture2D" uid="uid://bfpuj0iq1pibc" path="res://Assets/Art/crank_origin.png" id="2_ixjoy"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_p1uua"]
+radius = 36.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fxr5o"]
+radius = 197.09135
+
+[node name="HandCrank" type="Node2D" unique_id=1719548301]
+script = ExtResource("1_2ycgn")
+
+[node name="CrankOriginSprite" type="Sprite2D" parent="." unique_id=31563822]
+texture = ExtResource("2_ixjoy")
+
+[node name="CrankLeverSprite" type="Sprite2D" parent="." unique_id=1027805252]
+modulate = Color(0.67058825, 0.46666667, 0.21568628, 1)
+position = Vector2(29.5, 0)
+scale = Vector2(4.6875, 1)
+texture = ExtResource("1_p1uua")
+
+[node name="HandCrankHandle" type="Node2D" parent="." unique_id=2035765330]
+position = Vector2(100, 0)
+
+[node name="ClickableArea" type="Area2D" parent="HandCrankHandle" unique_id=743932603]
+collision_layer = 32
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HandCrankHandle/ClickableArea" unique_id=1234371934]
+shape = SubResource("CircleShape2D_p1uua")
+debug_color = Color(0.99979347, 0, 0.11640803, 0.41960785)
+
+[node name="DraggableArea" type="Area2D" parent="HandCrankHandle" unique_id=1104879725]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HandCrankHandle/DraggableArea" unique_id=1811644536]
+shape = SubResource("CircleShape2D_fxr5o")
+disabled = true
+
+[node name="HandCrankHandleSprite" type="Sprite2D" parent="HandCrankHandle" unique_id=2035574822]
+texture = ExtResource("1_e6f0s")

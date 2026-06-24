@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://4t183y78j406"]
+
+[ext_resource type="Script" uid="uid://cexy88vugvmq1" path="res://Scripts/health_bar.gd" id="1_78m4n"]
+
+[sub_resource type="Gradient" id="Gradient_0b2sg"]
+colors = PackedColorArray(0.4608078, 0.16061279, 0.068631016, 1, 0.16709885, 0.081441276, 0.05518698, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_hm7mj"]
+gradient = SubResource("Gradient_0b2sg")
+width = 35
+height = 7
+fill_from = Vector2(1, 0)
+fill_to = Vector2(0, 0)
+
+[sub_resource type="Gradient" id="Gradient_fa85u"]
+colors = PackedColorArray(0.7931711, 0.34591502, 0.26320228, 1, 0.9321078, 0.6216492, 0.51269495, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_k5ul3"]
+gradient = SubResource("Gradient_fa85u")
+width = 35
+height = 7
+
+[node name="EnemyHealthBar" type="TextureProgressBar" unique_id=1347073494]
+visible = false
+z_index = 1
+offset_right = 20.0
+offset_bottom = 5.0
+value = 100.0
+texture_under = SubResource("GradientTexture2D_hm7mj")
+texture_progress = SubResource("GradientTexture2D_k5ul3")
+script = ExtResource("1_78m4n")

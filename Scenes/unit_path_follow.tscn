@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://dtulup478vp38"]
+
+[ext_resource type="Script" uid="uid://ct0ieme7ybwxk" path="res://Scripts/unit_path_follow.gd" id="1_ox7ku"]
+
+[node name="UnitPathFollow" type="PathFollow2D" unique_id=922385664]
+loop = false
+script = ExtResource("1_ox7ku")
+
+[node name="Guide" type="Node2D" parent="." unique_id=778142092]
+
+[node name="Polygon2D" type="Polygon2D" parent="Guide" unique_id=633285047]
+visible = false
+polygon = PackedVector2Array(-0.14303374, -4.67364, -2.388036, 3.8981867, 13.53107, -2.2245467)
