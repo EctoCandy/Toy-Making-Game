@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://47n0ywaijsjh" path="res://Scripts/main.gd" id="1_a42kk"]
 [ext_resource type="Script" uid="uid://blc4aqa28cf5k" path="res://Scripts/lane.gd" id="2_y3kjb"]
+[ext_resource type="PackedScene" uid="uid://q0gq8mno4fm" path="res://RobotBuilder.tscn" id="3_y3kjb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3hlg8"]
 size = Vector2(1152, 204.5)
@@ -85,5 +86,7 @@ curve = SubResource("Curve2D_a60md")
 [node name="SpawnTimer" type="Timer" parent="." unique_id=247059653]
 wait_time = 0.25
 autostart = true
+
+[node name="RobotBuilder" parent="." unique_id=1119867491 instance=ExtResource("3_y3kjb")]
 
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]

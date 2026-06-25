@@ -14,13 +14,18 @@ var colors = [
 	]
 
 
-func spawn_unit(unit_type: PackedScene, path: String):
+func spawn_unit(unit_type: PackedScene, path: String, unit_data: Dictionary = {}) -> Node2D:
 	var new_path_follow = UNIT_PATH_FOLLOW.instantiate()
 	var new_unit = unit_type.instantiate()
 	
 	# Setting up path_follow/unit pair
 	new_unit.path_follow = new_path_follow
 	new_path_follow.unit = new_unit
+	
+	find_child(path).add_child(new_path_follow)
+	find_child(path).add_child(new_unit)
+	
+	_apply_unit_data_to_unit(new_unit, unit_data)
 	
 	find_child(path).add_child(new_path_follow)
 	find_child(path).add_child(new_unit)
@@ -33,3 +38,18 @@ func spawn_unit(unit_type: PackedScene, path: String):
 	
 	spawn_position.y += randf_range(-SPAWN_RANGE, SPAWN_RANGE)
 	new_unit.global_position = spawn_position
+	
+	return new_unit
+
+func _apply_unit_data_to_unit(unit: Node, unit_data: Dictionary) -> void:
+	if unit_data.is_empty():
+		return
+		
+	if unit_data.has("damage"):
+		unit.set("attack_strength", unit_data["damage"])
+	
+	if unit_data.has("move_speed"):
+		unit.set("mov_speed", unit_data["move_speed"] / 100.0)
+		
+	if unit_data.has("health"):
+		unit.set("max_health", unit_data["health"])

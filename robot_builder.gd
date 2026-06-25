@@ -62,6 +62,7 @@ func _ready() -> void:
 			var head := child as Sprite2D
 
 			head.centered = true
+			head.z_index = 1
 			head_parts.append(head)
 			starting_positions[head] = head.global_position
 

@@ -14,8 +14,10 @@ const RAYCAST_COLLISION_MASK = 4
 @onready var lane_1: Area2D = $Lane1
 @onready var lane_2: Area2D = $Lane2
 @onready var lane_3: Area2D = $Lane3
+@onready var robot_builder: Node2D = $RobotBuilder
 
 var lane_dict := {}
+var selected_lane := 1
 
 
 func _ready() -> void:
@@ -25,14 +27,32 @@ func _ready() -> void:
 		3 : lane_3,
 	}
 
+	robot_builder.robot_completed.connect(_on_robot_completed)
+
+	print("Selected lane: ", selected_lane)
 
 func _input(event: InputEvent) -> void:
+	if has_node("RobotBuilder/MinigameHost"):
+		if $RobotBuilder/MinigameHost.visible:
+			return
+	
 	if event.is_action_pressed("left_click"):
-		var interactible_element = raycast_check_for_interractibles()
+		var clicked_lane = raycast_check_for_interractibles()
 		
-		if not interactible_element == null:
-			interactible_element.spawn_unit(BASIC_PLAYER_UNIT,"PlayerUnitPath")
-
+		if clicked_lane != null:
+			selected_lane = _get_lane_number(clicked_lane)
+			print("Selected lane: ", selected_lane)
+	
+	if event is InputEventKey and event.pressed:
+		if event.keycode ==  KEY_1:
+			selected_lane = 1
+			print("Selected Lane: 1" )
+		elif event.keycode ==  KEY_2:
+			selected_lane = 2
+			print("Selected Lane: 2" )
+		elif event.keycode ==  KEY_3:
+			selected_lane = 3
+			print("Selected Lane: 3" )
 
 func raycast_check_for_interractibles():
 	## This function returns the node that mouse hovers over and its
@@ -49,6 +69,26 @@ func raycast_check_for_interractibles():
 		return result[0].collider
 	return null
 
+func _get_lane_number(lane: Area2D) -> int:
+	if lane == lane_1:
+		return 1
+	elif lane == lane_2:
+		return 2
+	elif lane == lane_3:
+		return 3
+
+	return selected_lane
+
+
+func _on_robot_completed(unit_data: Dictionary) -> void:
+	print("Robot finished from builder:")
+	print(unit_data)
+
+	var lane = lane_dict[selected_lane]
+
+	# For now, every built robot uses the same basic player unit scene.
+	# The unit_data controls its stats.
+	lane.spawn_unit(BASIC_PLAYER_UNIT, "PlayerUnitPath", unit_data)
 
 func _on_spawn_timer_timeout() -> void:
 	var rand_lane = randi_range(1, 3) # temporary

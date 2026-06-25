@@ -15,6 +15,13 @@ var next_minigame_index := 0
 func _ready() -> void:
 	position = Vector2.ZERO
 	size = host_size
+	
+	#keeps minigame ui above robot parts
+	z_index = 1000
+	
+	#makes it so the mouse doesn't pass through the minigame windows
+	mouse_filter = Control.MOUSE_FILTER_STOP
+	
 	hide()
 
 
@@ -67,6 +74,8 @@ func _start_minigame_scene(scene: PackedScene, context: Dictionary) -> void:
 
 	current_minigame.position = Vector2.ZERO
 	current_minigame.size = size
+	current_minigame.z_index = 1001
+	current_minigame.mouse_filter = Control.MOUSE_FILTER_STOP
 
 	current_minigame.minigame_completed.connect(_on_current_minigame_completed)
 	current_minigame.start_minigame(context)
