@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dtulup478vp38"]
 
-[ext_resource type="Script" uid="uid://ct0ieme7ybwxk" path="res://Scripts/unit_path_follow.gd" id="1_ox7ku"]
+[ext_resource type="Script" uid="uid://ct0ieme7ybwxk" path="res://Scripts/Lanes/unit_path_follow.gd" id="1_ox7ku"]
 
 [node name="UnitPathFollow" type="PathFollow2D" unique_id=922385664]
 loop = false

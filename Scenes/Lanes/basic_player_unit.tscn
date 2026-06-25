@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://dt3wdlwjtddbi"]
 
-[ext_resource type="Script" uid="uid://cvasj2b5ad283" path="res://Scripts/basic_player_unit.gd" id="1_oovt2"]
-[ext_resource type="PackedScene" uid="uid://4t183y78j406" path="res://Scenes/health_bar.tscn" id="2_rgwky"]
-[ext_resource type="Texture2D" uid="uid://bljipspqn4m3q" path="res://missle_head-export.png" id="3_0hy33"]
+[ext_resource type="Script" uid="uid://cvasj2b5ad283" path="res://Scripts/Lanes/basic_player_unit.gd" id="1_oovt2"]
+[ext_resource type="PackedScene" uid="uid://4t183y78j406" path="res://Scenes/Lanes/health_bar.tscn" id="2_rgwky"]
+[ext_resource type="Texture2D" uid="uid://bljipspqn4m3q" path="res://Assets/Art/missle_head-export.png" id="3_0hy33"]
 [ext_resource type="Texture2D" uid="uid://dt83ps7f6x7na" path="res://Assets/Art/RobotBody.png" id="3_4stia"]
 [ext_resource type="Texture2D" uid="uid://c86sbraccobbm" path="res://Assets/Art/ToyCrankSpritesheet.png" id="3_w52iy"]
 [ext_resource type="Texture2D" uid="uid://bsc6k8joigrk6" path="res://Assets/Art/TankTreads.png" id="5_pxdfh"]

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://03do3l0joji8"
-path="res://.godot/imported/pixil-frame-0_13.png-a62e0bca2dac8214e949b7a3fe863a79.ctex"
+uid="uid://c8t5qlaeuirxx"
+path="res://.godot/imported/missle_head.png-53e51d280cdc6d495edce8ce45475369.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://pixil-frame-0_13.png"
-dest_files=["res://.godot/imported/pixil-frame-0_13.png-a62e0bca2dac8214e949b7a3fe863a79.ctex"]
+source_file="res://Assets/Art/missle_head.png"
+dest_files=["res://.godot/imported/missle_head.png-53e51d280cdc6d495edce8ce45475369.ctex"]
 
 [params]
 

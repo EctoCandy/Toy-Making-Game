@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://c7monp53ajy5i"]
 
-[ext_resource type="Script" uid="uid://47n0ywaijsjh" path="res://Scripts/main.gd" id="1_a42kk"]
-[ext_resource type="Script" uid="uid://blc4aqa28cf5k" path="res://Scripts/lane.gd" id="2_y3kjb"]
-[ext_resource type="PackedScene" uid="uid://q0gq8mno4fm" path="res://RobotBuilder.tscn" id="3_y3kjb"]
+[ext_resource type="Script" uid="uid://47n0ywaijsjh" path="res://Scripts/main.gd" id="1_ndud4"]
+[ext_resource type="Script" uid="uid://blc4aqa28cf5k" path="res://Scripts/Lanes/lane.gd" id="2_ndud4"]
+[ext_resource type="PackedScene" uid="uid://q0gq8mno4fm" path="res://Scenes/Minigames/RobotBuilder.tscn" id="3_oild2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3hlg8"]
 size = Vector2(1152, 204.5)
@@ -26,13 +26,13 @@ size = Vector2(1152, 204.5)
 size = Vector2(1152, 204.5)
 
 [node name="Main" type="Node2D" unique_id=1786035646]
-script = ExtResource("1_a42kk")
+script = ExtResource("1_ndud4")
 
 [node name="Lane1" type="Area2D" parent="." unique_id=1210094067]
 collision_layer = 4
 collision_mask = 0
 monitoring = false
-script = ExtResource("2_y3kjb")
+script = ExtResource("2_ndud4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Lane1" unique_id=2098619900]
 position = Vector2(576, 110.5)
@@ -49,7 +49,7 @@ curve = SubResource("Curve2D_a60md")
 collision_layer = 4
 collision_mask = 0
 monitoring = false
-script = ExtResource("2_y3kjb")
+script = ExtResource("2_ndud4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Lane2" unique_id=1062581280]
 position = Vector2(576, 325)
@@ -68,7 +68,7 @@ curve = SubResource("Curve2D_a60md")
 collision_layer = 4
 collision_mask = 0
 monitoring = false
-script = ExtResource("2_y3kjb")
+script = ExtResource("2_ndud4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Lane3" unique_id=1335300724]
 position = Vector2(576, 541)
@@ -87,6 +87,6 @@ curve = SubResource("Curve2D_a60md")
 wait_time = 0.25
 autostart = true
 
-[node name="RobotBuilder" parent="." unique_id=1119867491 instance=ExtResource("3_y3kjb")]
+[node name="RobotBuilder" parent="." unique_id=1119867491 instance=ExtResource("3_oild2")]
 
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]

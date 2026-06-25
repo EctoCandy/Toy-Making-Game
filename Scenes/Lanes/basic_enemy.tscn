@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://daib08ro8i7su"]
 
-[ext_resource type="Script" uid="uid://bbbwdm5ig2tq3" path="res://Scripts/basic_enemy.gd" id="1_lnkmd"]
-[ext_resource type="PackedScene" uid="uid://4t183y78j406" path="res://Scenes/health_bar.tscn" id="2_fecjr"]
+[ext_resource type="Script" uid="uid://bbbwdm5ig2tq3" path="res://Scripts/Lanes/basic_enemy.gd" id="1_lnkmd"]
+[ext_resource type="PackedScene" uid="uid://4t183y78j406" path="res://Scenes/Lanes/health_bar.tscn" id="2_fecjr"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_my7ai"]
 radius = 17.117243

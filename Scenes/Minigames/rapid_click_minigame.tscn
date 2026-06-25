@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://46ien1865vi1"]
 
-[ext_resource type="Script" uid="uid://btk4j51283in6" path="res://RapidClickMinigame.gd" id="1_xswao"]
+[ext_resource type="Script" uid="uid://btk4j51283in6" path="res://Scripts/Minigames/RapidClickMinigame.gd" id="1_xswao"]
 
 [node name="RapidClickMinigame" type="Control" unique_id=936046297]
 layout_mode = 3

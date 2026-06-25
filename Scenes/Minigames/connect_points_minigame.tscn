@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://7q7ejkuf8bt1"]
 
-[ext_resource type="Script" uid="uid://b77pw2xigtc6m" path="res://Minigames/ConnectPointsMinigame.gd" id="1_pqith"]
+[ext_resource type="Script" uid="uid://b77pw2xigtc6m" path="res://Scripts/Minigames/ConnectPointsMinigame.gd" id="1_pqith"]
 
 [node name="ConnectPointsMinigame" type="Control" unique_id=1538899967]
 layout_mode = 3

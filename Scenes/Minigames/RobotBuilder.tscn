@@ -1,13 +1,13 @@
 [gd_scene format=3 uid="uid://q0gq8mno4fm"]
 
-[ext_resource type="Script" uid="uid://cks0oq22ymusy" path="res://robot_builder.gd" id="1_fsatl"]
-[ext_resource type="Texture2D" uid="uid://03do3l0joji8" path="res://pixil-frame-0_13.png" id="2_sg3f8"]
-[ext_resource type="Texture2D" uid="uid://44w1wci3rfad" path="res://pixil-frame-0_12.png" id="3_wunrn"]
-[ext_resource type="Texture2D" uid="uid://bljipspqn4m3q" path="res://missle_head-export.png" id="4_fsatl"]
-[ext_resource type="Script" uid="uid://ggolqtocxmxi" path="res://MinigameHost.gd" id="5_sg3f8"]
-[ext_resource type="PackedScene" uid="uid://cj1uvjijlicxg" path="res://precision_click_minigame.tscn" id="6_u2lpb"]
-[ext_resource type="PackedScene" uid="uid://46ien1865vi1" path="res://rapid_click_minigame.tscn" id="7_8rvw4"]
-[ext_resource type="PackedScene" uid="uid://7q7ejkuf8bt1" path="res://connect_points_minigame.tscn" id="8_crh31"]
+[ext_resource type="Script" uid="uid://cks0oq22ymusy" path="res://Scripts/Minigames/robot_builder.gd" id="1_fsatl"]
+[ext_resource type="Texture2D" uid="uid://03do3l0joji8" path="res://Assets/Art/pixil-frame-0_13.png" id="2_sg3f8"]
+[ext_resource type="Texture2D" uid="uid://44w1wci3rfad" path="res://Assets/Art/pixil-frame-0_12.png" id="3_wunrn"]
+[ext_resource type="Texture2D" uid="uid://bljipspqn4m3q" path="res://Assets/Art/missle_head-export.png" id="4_fsatl"]
+[ext_resource type="Script" uid="uid://ggolqtocxmxi" path="res://Scripts/Minigames/MinigameHost.gd" id="5_sg3f8"]
+[ext_resource type="PackedScene" uid="uid://cj1uvjijlicxg" path="res://Scenes/Minigames/precision_click_minigame.tscn" id="6_u2lpb"]
+[ext_resource type="PackedScene" uid="uid://46ien1865vi1" path="res://Scenes/Minigames/rapid_click_minigame.tscn" id="7_8rvw4"]
+[ext_resource type="PackedScene" uid="uid://7q7ejkuf8bt1" path="res://Scenes/Minigames/connect_points_minigame.tscn" id="8_crh31"]
 
 [node name="RobotBuilder" type="Node2D" unique_id=1119867491]
 script = ExtResource("1_fsatl")

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cj1uvjijlicxg"]
 
-[ext_resource type="Script" uid="uid://cf64v3sigjhp2" path="res://PrecisionClickMinigame.gd" id="1_oyryn"]
+[ext_resource type="Script" uid="uid://cf64v3sigjhp2" path="res://Scripts/Minigames/PrecisionClickMinigame.gd" id="1_oyryn"]
 
 [node name="precisionClickMinigame" type="Control" unique_id=1406878777]
 layout_mode = 3
