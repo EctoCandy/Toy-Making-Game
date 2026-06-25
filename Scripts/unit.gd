@@ -1,4 +1,4 @@
-extends RigidBody2D
+extends CharacterBody2D
 class_name Unit
 
 ## /!\ The unit movement is divided between this script and unit_path_follow.gd
@@ -12,7 +12,7 @@ class_name Unit
 signal health_changed
 
 @export var max_health := 100.0
-@export var mov_speed := 0.6
+@export var mov_speed := 20.0 # was: 0.6
 @export var follow_strength := 10
 @export var max_follow_range := 70.0
 @export var reconnecting_range := 50.0
@@ -87,28 +87,34 @@ func _process(_delta: float) -> void:
 
 
 func _physics_process(_delta: float) -> void:
-	var bodies_intersecting = get_colliding_bodies()
+	# var bodies_intersecting = get_colliding_bodies()
 	enemies_in_range.clear()
 	
-	for i in bodies_intersecting.size():
-		if bodies_intersecting[i].collision_layer == encounter_collision_mask:
-			enemies_in_range.append(bodies_intersecting[i])
-
-# bug : if rigidbody very far from "guide", starts spinning healthbar
-func get_target_force(state :PhysicsDirectBodyState2D, origin, target):
-	var norm_direction = origin.direction_to(target)
-	var local_mov_speed = minf(mov_speed, origin.distance_to(target))
-	var velocity = local_mov_speed * norm_direction / state.step
+	velocity = global_position.direction_to(target_pos)
+	velocity *= mov_speed * _delta
+	velocity.y = 0
+	move_and_collide(velocity)
 	
-	# Decreasing y axis vel so the unit is pulled more towards the end than 
-	# the center of the lane
-	velocity.y = velocity.y / 2
-	
-	state.linear_velocity = velocity
+	# for i in bodies_intersecting.size():
+	# 	if bodies_intersecting[i].collision_layer == encounter_collision_mask:
+	# 		enemies_in_range.append(bodies_intersecting[i])
 
 
-func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
-	get_target_force(state, global_position, target_pos)
+## bug : if rigidbody very far from "guide", starts spinning healthbar
+#func get_target_force(state :PhysicsDirectBodyState2D, origin, target):
+	#var norm_direction = origin.direction_to(target)
+	#var local_mov_speed = minf(mov_speed, origin.distance_to(target))
+	#var velocity = local_mov_speed * norm_direction / state.step
+	#
+	## Decreasing y axis vel so the unit is pulled more towards the end than 
+	## the center of the lane
+	#velocity.y = velocity.y / 2
+	#
+	#state.linear_velocity = velocity
+
+
+#func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
+	#get_target_force(state, global_position, target_pos)
 
 
 func unit_encounter(enemies: Array):

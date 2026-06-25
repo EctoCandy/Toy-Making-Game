@@ -24,6 +24,7 @@ func _ready() -> void:
 		2 : lane_2,
 		3 : lane_3,
 	}
+	print(BASIC_ENEMY)
 
 
 func _input(event: InputEvent) -> void:

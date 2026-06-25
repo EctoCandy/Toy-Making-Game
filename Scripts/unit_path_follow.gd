@@ -5,7 +5,7 @@ extends PathFollow2D
 @export var speed = 0.02
 
 var is_stopped := false
-var unit : RigidBody2D
+var unit : CharacterBody2D
 
 
 func _process(delta: float) -> void:

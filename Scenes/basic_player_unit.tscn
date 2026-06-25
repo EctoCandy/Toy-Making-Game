@@ -7,8 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://c86sbraccobbm" path="res://Assets/Art/ToyCrankSpritesheet.png" id="3_w52iy"]
 [ext_resource type="Texture2D" uid="uid://bsc6k8joigrk6" path="res://Assets/Art/TankTreads.png" id="5_pxdfh"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_my7ai"]
-radius = 17.117243
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fecjr"]
+size = Vector2(46, 180)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pxdfh"]
 atlas = ExtResource("3_w52iy")
@@ -74,18 +74,17 @@ animations = [{
 "speed": 8.0
 }]
 
-[node name="BasicPlayerUnit" type="RigidBody2D" unique_id=1349566713]
-collision_mask = 3
-mass = 0.1
-gravity_scale = 0.0
-contact_monitor = true
-max_contacts_reported = 7
+[node name="BasicPlayerUnit" type="CharacterBody2D" unique_id=1107863713]
+y_sort_enabled = true
+collision_mask = 2
 script = ExtResource("1_oovt2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=489891610]
-shape = SubResource("CircleShape2D_my7ai")
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_fecjr")
 
 [node name="Polygon2D" type="Polygon2D" parent="." unique_id=907939166]
+visible = false
 color = Color(0.23810166, 0.26133683, 0.27383968, 1)
 polygon = PackedVector2Array(-13.262101, -9.818968, 9.536743e-07, -16.45002, 13.262109, -9.818968, 15.472455, 1.2327856, 11.051755, 12.284538, 9.536743e-07, 16.981533, -11.051751, 12.284538, -16, 1)
 
@@ -101,32 +100,36 @@ offset_right = 17.0
 offset_bottom = -24.0
 unit = NodePath("../..")
 
-[node name="Sprites" type="Node2D" parent="." unique_id=1312190282]
+[node name="Sprite" type="Node2D" parent="." unique_id=1312190282]
 
-[node name="TreadSpriteR" type="Sprite2D" parent="Sprites" unique_id=707859760]
+[node name="TreadSpriteR" type="Sprite2D" parent="Sprite" unique_id=707859760]
 z_as_relative = false
+y_sort_enabled = true
 position = Vector2(18.999998, 18)
 scale = Vector2(0.4, 0.4)
 texture = ExtResource("5_pxdfh")
 
-[node name="CrankSprite" type="AnimatedSprite2D" parent="Sprites" unique_id=1837397419]
+[node name="CrankSprite" type="AnimatedSprite2D" parent="Sprite" unique_id=1837397419]
+y_sort_enabled = true
 position = Vector2(-36.999996, 0)
 scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_g4v7s")
 
-[node name="BodySprite" type="Sprite2D" parent="Sprites" unique_id=1967644059]
+[node name="BodySprite" type="Sprite2D" parent="Sprite" unique_id=1967644059]
+y_sort_enabled = true
 scale = Vector2(0.4, 0.4)
 texture = ExtResource("3_4stia")
 
-[node name="TreadSpriteL" type="Sprite2D" parent="Sprites" unique_id=1169312529]
+[node name="TreadSpriteL" type="Sprite2D" parent="Sprite" unique_id=1169312529]
+y_sort_enabled = true
 position = Vector2(-12, 18)
 scale = Vector2(0.4, 0.4)
 texture = ExtResource("5_pxdfh")
 
-[node name="HeadSprite" type="Sprite2D" parent="Sprites" unique_id=688149783]
+[node name="HeadSprite" type="Sprite2D" parent="Sprite" unique_id=688149783]
+y_sort_enabled = true
 position = Vector2(2, -35)
 scale = Vector2(0.45, 0.45)
 texture = ExtResource("3_0hy33")
 
-[connection signal="body_exited" from="." to="." method="_on_body_exited"]
 [connection signal="timeout" from="AttackCooldown" to="." method="_on_attack_cooldown_timeout"]

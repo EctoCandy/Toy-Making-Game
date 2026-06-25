@@ -31,5 +31,8 @@ func spawn_unit(unit_type: PackedScene, path: String):
 	
 	var spawn_position = new_path_follow.find_child("Guide").global_position
 	
-	spawn_position.y += randf_range(-SPAWN_RANGE, SPAWN_RANGE)
+
+	if new_unit.is_in_group("Enemies"):
+		spawn_position.y += randf_range(-SPAWN_RANGE, SPAWN_RANGE)
+	new_unit.get_node("Sprite").position.y += randf_range(-60.0, 60.0)
 	new_unit.global_position = spawn_position

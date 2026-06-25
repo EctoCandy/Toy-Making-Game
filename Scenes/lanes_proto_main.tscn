@@ -41,6 +41,7 @@ shape = SubResource("RectangleShape2D_3hlg8")
 curve = SubResource("Curve2D_8ok3p")
 
 [node name="PlayerUnitPath" type="Path2D" parent="Lane1" unique_id=1962107610]
+y_sort_enabled = true
 position = Vector2(0, 3.335)
 curve = SubResource("Curve2D_a60md")
 

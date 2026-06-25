@@ -4,7 +4,7 @@ extends Unit
 
 func _ready() -> void:
 	super._ready()
-	$Sprites/CrankSprite.play()
+	$Sprite/CrankSprite.play()
 
 func set_up_encounter_mask():
 	encounter_collision_mask = 2

@@ -1,11 +1,12 @@
 extends TextureProgressBar
 
-@export var unit : Node2D
+@export var unit : Unit
 
 var pivot
 
 
 func _ready():
+	
 	unit.health_changed.connect(update_health_bar)
 	
 	pivot = get_parent()

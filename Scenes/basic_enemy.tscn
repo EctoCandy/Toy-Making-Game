@@ -3,20 +3,16 @@
 [ext_resource type="Script" uid="uid://bbbwdm5ig2tq3" path="res://Scripts/basic_enemy.gd" id="1_lnkmd"]
 [ext_resource type="PackedScene" uid="uid://4t183y78j406" path="res://Scenes/health_bar.tscn" id="2_fecjr"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_my7ai"]
-radius = 17.117243
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0hy33"]
+size = Vector2(31, 35)
 
-[node name="BasicEnemy" type="RigidBody2D" unique_id=1349566713]
+[node name="BasicEnemy" type="CharacterBody2D" unique_id=81649490 groups=["Enemies"]]
 collision_layer = 2
-collision_mask = 3
-mass = 0.1
-gravity_scale = 0.0
-contact_monitor = true
-max_contacts_reported = 7
 script = ExtResource("1_lnkmd")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=489891610]
-shape = SubResource("CircleShape2D_my7ai")
+position = Vector2(-0.5, 0.5)
+shape = SubResource("RectangleShape2D_0hy33")
 
 [node name="Polygon2D" type="Polygon2D" parent="." unique_id=907939166]
 self_modulate = Color(0.43134022, 0.43134025, 0.43134025, 1)
@@ -27,14 +23,15 @@ polygon = PackedVector2Array(-13.262101, -9.818968, 9.536743e-07, -16.45002, 13.
 wait_time = 0.1
 
 [node name="HealthBarPivot" type="Node2D" parent="." unique_id=705748251]
+visible = false
 
 [node name="HealthBar" parent="HealthBarPivot" unique_id=1347073494 node_paths=PackedStringArray("unit") instance=ExtResource("2_fecjr")]
-visible = false
 offset_left = -18.0
 offset_top = -32.0
 offset_right = 17.0
 offset_bottom = -25.0
 unit = NodePath("../..")
 
-[connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[node name="Sprite" type="Sprite2D" parent="." unique_id=129733634]
+
 [connection signal="timeout" from="AttackCooldown" to="." method="_on_attack_cooldown_timeout"]
