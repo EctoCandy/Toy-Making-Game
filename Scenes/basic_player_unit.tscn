@@ -103,11 +103,11 @@ unit = NodePath("../..")
 
 [node name="Sprites" type="Node2D" parent="." unique_id=1312190282]
 
-[node name="HeadSprite" type="Sprite2D" parent="Sprites" unique_id=688149783]
-z_index = 3
-position = Vector2(2, -35)
-scale = Vector2(0.45, 0.45)
-texture = ExtResource("3_0hy33")
+[node name="TreadSpriteR" type="Sprite2D" parent="Sprites" unique_id=707859760]
+z_as_relative = false
+position = Vector2(18.999998, 18)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("5_pxdfh")
 
 [node name="CrankSprite" type="AnimatedSprite2D" parent="Sprites" unique_id=1837397419]
 position = Vector2(-36.999996, 0)
@@ -115,24 +115,18 @@ scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_g4v7s")
 
 [node name="BodySprite" type="Sprite2D" parent="Sprites" unique_id=1967644059]
-z_index = 1
 scale = Vector2(0.4, 0.4)
 texture = ExtResource("3_4stia")
 
-[node name="TreadSprites" type="Node2D" parent="Sprites" unique_id=290660172]
-position = Vector2(0, 18)
-
-[node name="TreadSpriteL" type="Sprite2D" parent="Sprites/TreadSprites" unique_id=1169312529]
-z_index = 2
-position = Vector2(-12, 0)
+[node name="TreadSpriteL" type="Sprite2D" parent="Sprites" unique_id=1169312529]
+position = Vector2(-12, 18)
 scale = Vector2(0.4, 0.4)
 texture = ExtResource("5_pxdfh")
 
-[node name="TreadSpriteR" type="Sprite2D" parent="Sprites/TreadSprites" unique_id=707859760]
-z_as_relative = false
-position = Vector2(18.999998, 0)
-scale = Vector2(0.4, 0.4)
-texture = ExtResource("5_pxdfh")
+[node name="HeadSprite" type="Sprite2D" parent="Sprites" unique_id=688149783]
+position = Vector2(2, -35)
+scale = Vector2(0.45, 0.45)
+texture = ExtResource("3_0hy33")
 
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
 [connection signal="timeout" from="AttackCooldown" to="." method="_on_attack_cooldown_timeout"]
