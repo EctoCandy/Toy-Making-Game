@@ -9,10 +9,12 @@ class_name Unit
 
 # TODO: Make "guide" always be ahead/close to unit on x axis so units don't go
 # backwards after being pushed away from guide
+# TODO: Lock rotation without changing the way units interact with each other
+
 signal health_changed
 
-@export var max_health := 100.0
-@export var mov_speed := 0.6
+@export var max_health := 100.0 # temporary
+@export var mov_speed := 0.6 # temporary
 @export var follow_strength := 10
 @export var max_follow_range := 70.0
 @export var reconnecting_range := 50.0
@@ -38,52 +40,42 @@ func _ready() -> void:
 	
 	path_guide = path_follow.find_child("Guide")
 	target_pos = path_guide.global_position
-	attack_cooldown.wait_time = randf_range(1.5, 2.0)
 	
-	set_up_encounter_mask()
+	path_follow.find_child("FrontlineArea").collision_mask = encounter_collision_mask
+	attack_cooldown.wait_time = randf_range(1.5, 2.0)
 
 
 func _process(_delta: float) -> void:
-	target_pos = path_guide.global_position
+	if enemies_in_range.size() == 0:
+		target_pos = path_guide.global_position
 	
-	## CHECKING GUIDE/UNIT DISTANCE 
-	# Stopping unit when too far from guide to stop units "sneaking" behind lines
-	if (
-			is_away_from_guide == false
-			and global_position.distance_to(target_pos) > max_follow_range
-		):
-		#print("test too far")
-		path_follow.is_stopped = true
-		is_away_from_guide = true
-		#find_child("Polygon2D").modulate = Color(0.0, 0.0, 0.0, 0.369)
-		
-	elif (
-			is_away_from_guide == true
-			and global_position.distance_to(target_pos) < reconnecting_range
-		):
-		#print("test reconnect")
-		path_follow.is_stopped = false
-		is_away_from_guide = false
-		#find_child("Polygon2D").modulate = Color(1.0, 1.0, 1.0, 1.0)
+	
+	
+	## CHECKING GUIDE/UNIT DISTANCE (not used anymore)
+	#
+	# Stopping unit when too far from guide on x axis
+	# to stop units "sneaking" behind lines
+	#var dist_from_target = abs(target_pos.x - global_position.x)
+	#
+	#if dist_from_target > max_follow_range:
+		#is_away_from_guide = true
+	#elif dist_from_target < reconnecting_range:
+		#is_away_from_guide = false
+	#
 	
 	## CHECKING COLLISION WITH ADVERSARY
-	# Fix edge case where unit is too far from guide and collides an adversary
 	if (
 			enemies_in_range.size() > 0
 			and is_in_combat == false
-		):
-		path_follow.is_stopped = true
+	):
 		is_in_combat = true
 		unit_encounter(enemies_in_range)
 	
 	elif (
 			enemies_in_range.is_empty()
 			and is_in_combat == true
-		):
-		path_follow.is_stopped = false
+	):
 		is_in_combat = false
-		target_pos = path_guide.global_position
-		#find_child("Polygon2D").modulate = Color(1.0, 1.0, 1.0, 1.0)
 
 
 func _physics_process(_delta: float) -> void:
@@ -94,7 +86,7 @@ func _physics_process(_delta: float) -> void:
 		if bodies_intersecting[i].collision_layer == encounter_collision_mask:
 			enemies_in_range.append(bodies_intersecting[i])
 
-# bug : if rigidbody very far from "guide", starts spinning healthbar
+# known bug : if rigidbody very far from "guide", starts spinning healthbar
 func get_target_force(state :PhysicsDirectBodyState2D, origin, target):
 	var norm_direction = origin.direction_to(target)
 	var local_mov_speed = minf(mov_speed, origin.distance_to(target))
@@ -112,15 +104,15 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 
 
 func unit_encounter(enemies: Array):
-	#find_child("Polygon2D").modulate = Color(0.262, 0.262, 0.262, 1.0)
 	health_bar.visible = true
 	
+	## Changes target from "guide" to an enemy in range
 	for i in range(enemies.size()-1, -1, - 1): # iterating backwards
 		if not is_instance_valid(enemies[i]):
 			pass
 		else:
-			target_pos = enemies[i].global_position
 			break
+			
 	attack_cooldown.start()
 
 
@@ -136,8 +128,3 @@ func defeat():
 	path_follow.queue_free()
 	#self.modulate = Color(0.891, 0.0, 0.915, 1.0)
 	self.queue_free()
-
-
-# This function is made to be replaced by child of inheritance
-func set_up_encounter_mask():
-	pass

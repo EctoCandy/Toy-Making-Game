@@ -1,0 +1,99 @@
+[gd_scene format=3 uid="uid://bdhnmds611gw8"]
+
+[ext_resource type="Script" uid="uid://blc4aqa28cf5k" path="res://Scripts/Lanes/lane.gd" id="1_a533s"]
+
+[sub_resource type="Curve2D" id="Curve2D_8ok3p"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 988, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 2
+
+[sub_resource type="Curve2D" id="Curve2D_a60md"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 1152, 0)
+}
+point_count = 2
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3hlg8"]
+size = Vector2(1152, 204.5)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_ln6rh"]
+a = Vector2(1439, 7)
+b = Vector2(-186.855, 7)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_a533s"]
+a = Vector2(-186.855, 214.285)
+b = Vector2(-186.855, 7)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_au3mx"]
+a = Vector2(1439, 7)
+b = Vector2(1439, 214)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_ev2v7"]
+a = Vector2(-186.855, 214)
+b = Vector2(1439, 214)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_nubcq"]
+a = Vector2(17.715, 214.285)
+b = Vector2(17.715, 7)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_tcfoc"]
+a = Vector2(1135.705, 7)
+b = Vector2(1135.705, 214)
+
+[node name="Lane" type="Node2D" unique_id=757423102]
+script = ExtResource("1_a533s")
+
+[node name="EnemyPath" type="Path2D" parent="." unique_id=2096653348]
+position = Vector2(0, 105)
+curve = SubResource("Curve2D_8ok3p")
+
+[node name="PlayerUnitPath" type="Path2D" parent="." unique_id=1252086058]
+position = Vector2(0, 105)
+curve = SubResource("Curve2D_a60md")
+
+[node name="Lane" type="Area2D" parent="." unique_id=1811325806]
+collision_layer = 4
+collision_mask = 0
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Lane" unique_id=1626380693]
+position = Vector2(576, 110.5)
+shape = SubResource("RectangleShape2D_3hlg8")
+
+[node name="LaneBoundaries" type="StaticBody2D" parent="." unique_id=1758305708]
+collision_layer = 8
+collision_mask = 0
+
+[node name="TopBoundary" type="CollisionShape2D" parent="LaneBoundaries" unique_id=130582915]
+shape = SubResource("SegmentShape2D_ln6rh")
+debug_color = Color(0.9931198, 0.07226638, 0.07616938, 0.41960785)
+
+[node name="LeftBoundary" type="CollisionShape2D" parent="LaneBoundaries" unique_id=125462755]
+shape = SubResource("SegmentShape2D_a533s")
+one_way_collision_direction = Vector2(0, 0)
+debug_color = Color(0.9931198, 0.07226638, 0.07616938, 0.41960785)
+
+[node name="RightBoundary" type="CollisionShape2D" parent="LaneBoundaries" unique_id=1579966826]
+shape = SubResource("SegmentShape2D_au3mx")
+debug_color = Color(0.9931198, 0.07226638, 0.07616938, 0.41960785)
+
+[node name="BottomBoundary" type="CollisionShape2D" parent="LaneBoundaries" unique_id=1253043053]
+shape = SubResource("SegmentShape2D_ev2v7")
+debug_color = Color(0.9931198, 0.07226638, 0.07616938, 0.41960785)
+
+[node name="UnitGates" type="StaticBody2D" parent="." unique_id=956753309]
+collision_layer = 8
+collision_mask = 0
+
+[node name="PlayerUnitGate" type="CollisionShape2D" parent="UnitGates" unique_id=1766581095]
+shape = SubResource("SegmentShape2D_nubcq")
+one_way_collision = true
+one_way_collision_direction = Vector2(-1, 0)
+debug_color = Color(0.8018917, 0.6560005, 0.03154374, 0.41960785)
+
+[node name="EnemyUnitGate" type="CollisionShape2D" parent="UnitGates" unique_id=839941908]
+shape = SubResource("SegmentShape2D_tcfoc")
+one_way_collision = true
+one_way_collision_direction = Vector2(1, 0)
+debug_color = Color(0.8018917, 0.6560005, 0.03154374, 0.41960785)

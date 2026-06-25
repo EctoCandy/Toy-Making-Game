@@ -2,10 +2,10 @@
 ## Handles the spawning and setting up of all units (enemy or allied depending
 ## on parameters passed)
 
-extends Area2D
+extends Node2D
 
 const UNIT_PATH_FOLLOW = preload("uid://dtulup478vp38")
-const SPAWN_RANGE = 120.0
+const SPAWN_RANGE = 80.0
 
 var colors = [
 		Color(0.842, 0.319, 0.232, 1.0),
@@ -27,9 +27,7 @@ func spawn_unit(unit_type: PackedScene, path: String, unit_data: Dictionary = {}
 	
 	_apply_unit_data_to_unit(new_unit, unit_data)
 	
-	find_child(path).add_child(new_path_follow)
-	find_child(path).add_child(new_unit)
-	
+	# temporary
 	var rand_color = colors[randi() % colors.size()]
 	new_unit.find_child("Polygon2D").color = rand_color
 	new_path_follow.get_node("Guide/Polygon2D").color = rand_color

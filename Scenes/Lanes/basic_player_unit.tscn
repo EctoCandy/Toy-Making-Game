@@ -75,7 +75,7 @@ animations = [{
 }]
 
 [node name="BasicPlayerUnit" type="RigidBody2D" unique_id=1349566713]
-collision_mask = 3
+collision_mask = 11
 mass = 0.1
 gravity_scale = 0.0
 contact_monitor = true
@@ -102,6 +102,7 @@ offset_bottom = -24.0
 unit = NodePath("../..")
 
 [node name="Sprites" type="Node2D" parent="." unique_id=1312190282]
+visible = false
 
 [node name="TreadSpriteR" type="Sprite2D" parent="Sprites" unique_id=707859760]
 z_as_relative = false

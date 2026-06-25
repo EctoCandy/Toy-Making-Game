@@ -3,11 +3,9 @@ extends Unit
 @export var attack_strength = 10
 
 func _ready() -> void:
-	super._ready()
 	$Sprites/CrankSprite.play()
-
-func set_up_encounter_mask():
 	encounter_collision_mask = 2
+	super._ready()
 
 
 func _on_attack_cooldown_timeout():

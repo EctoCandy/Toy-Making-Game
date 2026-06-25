@@ -1,9 +1,11 @@
 extends Unit
 
-@export var attack_strength = 1.0
+@export var attack_strength = 10
 
-func set_up_encounter_mask():
+func _ready() -> void:
 	encounter_collision_mask = 1
+	super._ready()
+
 
 
 func _on_attack_cooldown_timeout():

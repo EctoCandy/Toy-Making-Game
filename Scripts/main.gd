@@ -11,9 +11,9 @@ const BASIC_PLAYER_UNIT = preload("uid://dt3wdlwjtddbi")
 const BASIC_ENEMY = preload("uid://daib08ro8i7su")
 const RAYCAST_COLLISION_MASK = 4
 
-@onready var lane_1: Area2D = $Lane1
-@onready var lane_2: Area2D = $Lane2
-@onready var lane_3: Area2D = $Lane3
+@onready var lane_1: Node2D = $Lane1
+@onready var lane_2: Node2D = $Lane2
+@onready var lane_3: Node2D = $Lane3
 @onready var robot_builder: Node2D = $RobotBuilder
 
 var lane_dict := {}
@@ -40,17 +40,23 @@ func _input(event: InputEvent) -> void:
 		var clicked_lane = raycast_check_for_interractibles()
 		
 		if clicked_lane != null:
-			selected_lane = _get_lane_number(clicked_lane)
+			print("test")
+			selected_lane = _get_lane_number(clicked_lane.get_parent())
 			print("Selected lane: ", selected_lane)
 	
+	## DEV FEATURE (SPAWNS UNIT INSTANTLY)
+	elif event.is_action_pressed("right_click (debug)"):
+		var lane = lane_dict[selected_lane]
+		lane.spawn_unit(BASIC_PLAYER_UNIT, "PlayerUnitPath", Dictionary({}))
+	
 	if event is InputEventKey and event.pressed:
-		if event.keycode ==  KEY_1:
+		if event.is_action_pressed("1_key"):
 			selected_lane = 1
 			print("Selected Lane: 1" )
-		elif event.keycode ==  KEY_2:
+		elif event.is_action_pressed("2_key"):
 			selected_lane = 2
 			print("Selected Lane: 2" )
-		elif event.keycode ==  KEY_3:
+		elif event.is_action_pressed("3_key"):
 			selected_lane = 3
 			print("Selected Lane: 3" )
 
@@ -69,7 +75,7 @@ func raycast_check_for_interractibles():
 		return result[0].collider
 	return null
 
-func _get_lane_number(lane: Area2D) -> int:
+func _get_lane_number(lane: Node2D) -> int:
 	if lane == lane_1:
 		return 1
 	elif lane == lane_2:
