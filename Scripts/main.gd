@@ -1,5 +1,8 @@
 extends Node2D
 
+# TODO : Fix lanes not being properly scaled (top and bottom should be stretched
+# to fit the whole height of the screen)
+
 @export var player_unit_scene: PackedScene = preload("uid://dt3wdlwjtddbi")
 @export var enemy_unit_scene: PackedScene = preload("uid://daib08ro8i7su")
 @export var robot_builder_scene: PackedScene = preload("res://Scenes/Minigames/RobotBuilder.tscn")

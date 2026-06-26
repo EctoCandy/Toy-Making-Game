@@ -108,7 +108,7 @@ func _setup_wind_up_nodes() -> void:
 
 		wind_up_key.position = wind_key_position
 		wind_up_key.rotation = 0.0
-		wind_up_key.z_index = 5000
+		wind_up_key.z_index = 100
 		wind_up_key.z_as_relative = false
 
 		# The key starts hidden and disabled.
@@ -119,7 +119,7 @@ func _setup_wind_up_nodes() -> void:
 	if wind_progress_bar != null:
 		wind_progress_bar.position = wind_progress_position
 		wind_progress_bar.size = wind_progress_size
-		wind_progress_bar.z_index = 5001
+		wind_progress_bar.z_index = 101
 		wind_progress_bar.z_as_relative = false
 		wind_progress_bar.min_value = 0
 		wind_progress_bar.max_value = required_wind_amount
@@ -273,7 +273,7 @@ func _start_wind_up_step() -> void:
 
 	wind_up_key.position = wind_key_position
 	wind_up_key.rotation = 0.0
-	wind_up_key.z_index = 5000
+	wind_up_key.z_index = 100
 	wind_up_key.z_as_relative = false
 	wind_up_key.set_enabled(true)
 
@@ -282,7 +282,7 @@ func _start_wind_up_step() -> void:
 		wind_progress_bar.size = wind_progress_size
 		wind_progress_bar.max_value = required_wind_amount
 		wind_progress_bar.value = 0
-		wind_progress_bar.z_index = 5001
+		wind_progress_bar.z_index = 101
 		wind_progress_bar.z_as_relative = false
 		wind_progress_bar.show()
 

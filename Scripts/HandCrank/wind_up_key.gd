@@ -1,6 +1,8 @@
 class_name WindUpKey
 extends Node2D
 
+# TODO: Fix collision shape somehow changing to a circle when instantiated
+
 signal cranked(distance: float)
 
 @export var max_rotation_speed_degrees: float = 1080.0
@@ -47,7 +49,7 @@ func set_enabled(value: bool) -> void:
 	following_mouse = false
 	set_physics_process(value)
 
-	z_index = 5000
+	z_index = 100
 	z_as_relative = false
 
 	_set_area_enabled("ClickableArea1", value)
