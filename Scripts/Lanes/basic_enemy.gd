@@ -1,9 +1,8 @@
 extends Unit
 
-@export var attack_strength = 10
+@export var attack_strength = 10.0
 
 func _ready() -> void:
-	encounter_collision_mask = 1
 	super._ready()
 
 

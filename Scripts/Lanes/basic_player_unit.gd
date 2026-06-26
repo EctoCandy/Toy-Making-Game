@@ -1,10 +1,9 @@
 extends Unit
 
-@export var attack_strength = 10
+@export var attack_strength = 10.0
 
 func _ready() -> void:
 	$Pivot/Sprites/CrankSprite.play()
-	encounter_collision_mask = 2
 	super._ready()
 
 

@@ -7,6 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://cpvvyhm5pd78n" path="res://Assets/Art/RoboHead.png" id="5_nyo6d"]
 [ext_resource type="Texture2D" uid="uid://bsc6k8joigrk6" path="res://Assets/Art/TankTreads.png" id="5_pxdfh"]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_nyo6d"]
+radius = 17.029387
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_24roy"]
 atlas = ExtResource("3_nyo6d")
 region = Rect2(0, 0, 96, 96)
@@ -89,8 +92,8 @@ gradient = SubResource("Gradient_fa85u")
 width = 22
 height = 11
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_nyo6d"]
-radius = 17.029387
+[sub_resource type="CircleShape2D" id="CircleShape2D_24roy"]
+radius = 23.0
 
 [node name="BasicPlayerUnit" type="RigidBody2D" unique_id=1349566713]
 collision_mask = 11
@@ -99,6 +102,10 @@ gravity_scale = 0.0
 contact_monitor = true
 max_contacts_reported = 7
 script = ExtResource("1_oovt2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=489891610]
+position = Vector2(0, -10)
+shape = SubResource("CircleShape2D_nyo6d")
 
 [node name="Pivot" type="Node2D" parent="." unique_id=1747119850]
 
@@ -141,9 +148,14 @@ texture_under = SubResource("GradientTexture2D_nyo6d")
 texture_progress = SubResource("GradientTexture2D_24roy")
 unit = NodePath("../..")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=489891610]
-position = Vector2(1, -10)
-shape = SubResource("CircleShape2D_nyo6d")
+[node name="AttackRangeArea" type="Area2D" parent="." unique_id=1294102457]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRangeArea" unique_id=488800084]
+position = Vector2(0, -10)
+shape = SubResource("CircleShape2D_24roy")
+debug_color = Color(0.9993295, 0, 0.13029152, 0.41960785)
 
 [node name="Polygon2D" type="Polygon2D" parent="." unique_id=907939166]
 visible = false
@@ -151,6 +163,7 @@ color = Color(0.23810166, 0.26133683, 0.27383968, 1)
 polygon = PackedVector2Array(-13.262101, -9.818968, 9.536743e-07, -16.45002, 13.262109, -9.818968, 15.472455, 1.2327856, 11.051755, 12.284538, 9.536743e-07, 16.981533, -11.051751, 12.284538, -16, 1)
 
 [node name="AttackCooldown" type="Timer" parent="." unique_id=1212120893]
+wait_time = 0.1
 
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
 [connection signal="timeout" from="AttackCooldown" to="." method="_on_attack_cooldown_timeout"]

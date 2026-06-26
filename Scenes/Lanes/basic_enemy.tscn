@@ -6,6 +6,9 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_my7ai"]
 radius = 17.117243
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_ln6rh"]
+radius = 23.0
+
 [node name="BasicEnemy" type="RigidBody2D" unique_id=1349566713]
 collision_layer = 2
 collision_mask = 11
@@ -14,6 +17,9 @@ gravity_scale = 0.0
 contact_monitor = true
 max_contacts_reported = 7
 script = ExtResource("1_lnkmd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=489891610]
+shape = SubResource("CircleShape2D_my7ai")
 
 [node name="Pivot" type="Node2D" parent="." unique_id=80256902]
 
@@ -29,8 +35,12 @@ self_modulate = Color(0.43134022, 0.43134025, 0.43134025, 1)
 color = Color(1, 1, 1, 0.531)
 polygon = PackedVector2Array(-13.262101, -9.818968, 9.536743e-07, -16.45002, 13.262109, -9.818968, 15.472455, 1.2327856, 11.051755, 12.284538, 9.536743e-07, 16.981533, -11.051751, 12.284538, -15.472451, 1.2327856)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=489891610]
-shape = SubResource("CircleShape2D_my7ai")
+[node name="AttackRangeArea" type="Area2D" parent="." unique_id=660404949]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRangeArea" unique_id=1828761778]
+shape = SubResource("CircleShape2D_ln6rh")
+debug_color = Color(0.9993295, 0, 0.13029152, 0.41960785)
 
 [node name="AttackCooldown" type="Timer" parent="." unique_id=758884567]
 wait_time = 0.1
