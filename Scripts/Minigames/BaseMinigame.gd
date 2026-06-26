@@ -12,6 +12,9 @@ var context: Dictionary = {}
 func start_minigame(new_context: Dictionary = {}) -> void:
 	context = new_context
 	active = true
+
+	mouse_filter = Control.MOUSE_FILTER_STOP
+
 	show()
 	set_process(true)
 

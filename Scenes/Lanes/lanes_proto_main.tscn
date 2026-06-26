@@ -21,4 +21,26 @@ autostart = true
 
 [node name="RobotBuilder" parent="." unique_id=1119867491 instance=ExtResource("3_oild2")]
 
+[node name="ScreenUI" type="CanvasLayer" parent="." unique_id=516518002]
+
+[node name="HudBackground" type="TextureRect" parent="ScreenUI" unique_id=707974757]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ScoreLabel" type="Label" parent="ScreenUI" unique_id=1771547033]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="WaveLabel" type="Label" parent="ScreenUI" unique_id=311915619]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="SelectedLaneLabel" type="Label" parent="ScreenUI" unique_id=1744320127]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="WaveProgress" type="ProgressBar" parent="ScreenUI" unique_id=717937290]
+offset_right = 4.0
+offset_bottom = 27.0
+
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]

@@ -4,9 +4,9 @@ class_name MinigameHost
 
 signal minigame_finished(success: bool)
 
-@export var host_size := Vector2(500, 720)
+@export var host_size := Vector2(640, 720)
 @export var minigame_scenes: Array[PackedScene] = []
-@export var use_random_minigames := true
+@export var use_random_minigames := false
 
 var current_minigame: BaseMinigame = null
 var next_minigame_index := 0
@@ -15,24 +15,22 @@ var next_minigame_index := 0
 func _ready() -> void:
 	position = Vector2.ZERO
 	size = host_size
-	
-	#keeps minigame ui above robot parts
+
 	z_index = 1000
-	
-	#makes it so the mouse doesn't pass through the minigame windows
+	z_as_relative = false
 	mouse_filter = Control.MOUSE_FILTER_STOP
-	
+
 	hide()
 
 
-#  Chooses which action minigame the player has to complete.
+# Chooses which action minigame the player has to complete.
 func start_random_minigame(context: Dictionary = {}) -> void:
 	if minigame_scenes.is_empty():
 		push_warning("No minigame scenes assigned to MinigameHost.")
 		minigame_finished.emit(false)
 		return
 
-	var scene: PackedScene
+	var scene: PackedScene = null
 
 	if use_random_minigames:
 		scene = minigame_scenes.pick_random()
@@ -43,10 +41,15 @@ func start_random_minigame(context: Dictionary = {}) -> void:
 		if next_minigame_index >= minigame_scenes.size():
 			next_minigame_index = 0
 
+	if scene == null:
+		push_warning("Chosen minigame scene is empty.")
+		minigame_finished.emit(false)
+		return
+
 	_start_minigame_scene(scene, context)
 
 
-#  Lets you force a specific minigame instead of picking randomly.
+# Lets you force a specific minigame instead of picking randomly.
 func start_minigame_by_index(index: int, context: Dictionary = {}) -> void:
 	if index < 0 or index >= minigame_scenes.size():
 		push_warning("Invalid minigame index.")
@@ -56,16 +59,18 @@ func start_minigame_by_index(index: int, context: Dictionary = {}) -> void:
 	_start_minigame_scene(minigame_scenes[index], context)
 
 
-#  Spawns the chosen minigame and starts the challenge.
+# Spawns the chosen minigame and starts the challenge.
 func _start_minigame_scene(scene: PackedScene, context: Dictionary) -> void:
 	_clear_current_minigame()
 
 	show()
 
-	current_minigame = scene.instantiate() as BaseMinigame
+	var instance := scene.instantiate()
+	current_minigame = instance as BaseMinigame
 
 	if current_minigame == null:
 		push_warning("Selected scene does not extend BaseMinigame.")
+		instance.queue_free()
 		hide()
 		minigame_finished.emit(false)
 		return
@@ -75,6 +80,7 @@ func _start_minigame_scene(scene: PackedScene, context: Dictionary) -> void:
 	current_minigame.position = Vector2.ZERO
 	current_minigame.size = size
 	current_minigame.z_index = 1001
+	current_minigame.z_as_relative = false
 	current_minigame.mouse_filter = Control.MOUSE_FILTER_STOP
 
 	current_minigame.minigame_completed.connect(_on_current_minigame_completed)

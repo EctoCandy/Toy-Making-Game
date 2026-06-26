@@ -76,6 +76,9 @@ func _ready() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if builder_locked:
 		return
+	
+	if minigame_host.visible:
+		return
 
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:

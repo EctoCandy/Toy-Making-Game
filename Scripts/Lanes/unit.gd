@@ -10,6 +10,7 @@ class_name Unit
 # TODO: Lock rotation without changing the way units interact with each other
 
 signal health_changed
+signal defeated(unit: Unit)
 
 @export var max_health := 100.0 # temporary
 @export var mov_speed := 0.6 # temporary
@@ -27,6 +28,7 @@ var encounter_collision_mask : int
 
 var is_away_from_guide := false
 var is_in_combat := false
+var is_defeated := false
 
 @onready var attack_cooldown: Timer = $AttackCooldown
 @onready var pivot: Node2D = $Pivot
@@ -126,6 +128,14 @@ func take_damage(damage):
 
 
 func defeat():
-	path_follow.queue_free()
-	#self.modulate = Color(0.891, 0.0, 0.915, 1.0)
-	self.queue_free()
+	if is_defeated:
+		return
+
+	is_defeated = true
+
+	defeated.emit(self)
+
+	if path_follow != null and is_instance_valid(path_follow):
+		path_follow.queue_free()
+
+	queue_free()
