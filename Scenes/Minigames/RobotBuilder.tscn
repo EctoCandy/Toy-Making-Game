@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cks0oq22ymusy" path="res://Scripts/Minigames/robot_builder.gd" id="1_fsatl"]
 [ext_resource type="Texture2D" uid="uid://03do3l0joji8" path="res://Assets/Art/pixil-frame-0_13.png" id="2_sg3f8"]
-[ext_resource type="Texture2D" uid="uid://m12o27p3o554" path="res://Assets/tall.png" id="3_uyipn"]
+[ext_resource type="Texture2D" uid="uid://m12o27p3o554" path="res://Assets/placeholder_background.png" id="3_uyipn"]
 [ext_resource type="Texture2D" uid="uid://44w1wci3rfad" path="res://Assets/Art/pixil-frame-0_12.png" id="3_wunrn"]
 [ext_resource type="Texture2D" uid="uid://bljipspqn4m3q" path="res://Assets/Art/missle_head-export.png" id="4_fsatl"]
 [ext_resource type="Script" uid="uid://ggolqtocxmxi" path="res://Scripts/Minigames/MinigameHost.gd" id="5_sg3f8"]

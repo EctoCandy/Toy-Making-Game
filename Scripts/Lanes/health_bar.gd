@@ -1,11 +1,11 @@
 extends TextureProgressBar
 
-@export var unit : Node2D
+@export var target : Node2D
 
 
 func _ready():
-	unit.health_changed.connect(update_health_bar)
+	target.health_changed.connect(update_health_bar)
 	update_health_bar()
 
 func update_health_bar():
-	value = unit.health * 100 / unit.max_health
+	value = target.health * 100 / target.max_health

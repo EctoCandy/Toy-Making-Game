@@ -85,3 +85,15 @@ func _has_property(object: Object, property_name: String) -> bool:
 			return true
 
 	return false
+
+
+func _on_enemy_end_lane_body_entered(body: Node2D) -> void:
+	print("enemy ended line")
+	var has_been_defeated = false
+	body.death(has_been_defeated)
+
+
+func _on_player_end_lane_body_entered(body: Node2D) -> void:
+	print("player ended line")
+	var has_been_defeated = false
+	body.death(has_been_defeated)

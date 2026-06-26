@@ -9,7 +9,8 @@ class_name Unit
 
 
 signal health_changed
-signal defeated(unit: Unit)
+signal died(unit: Unit, has_been_defeated: bool)
+signal player_damaged(damage)
 
 @export var max_health := 100.0 # temporary
 @export var mov_speed := 0.6 # temporary
@@ -26,7 +27,7 @@ var health : float
 
 var is_away_from_guide := false
 var is_in_combat := false
-var is_defeated := false
+var is_dead := false
 
 @onready var attack_cooldown: Timer = $AttackCooldown
 @onready var pivot: Node2D = $Pivot
@@ -92,18 +93,22 @@ func take_damage(damage):
 	health_changed.emit()
 	
 	if health <= 0:
-		defeat()
+		var has_been_defeated = true
+		death(has_been_defeated)
 
 
-func defeat():
-	if is_defeated:
+func death(has_been_defeated: bool):
+	if is_dead:
 		return
-
-	is_defeated = true
-
-	defeated.emit(self)
-
+	
+	is_dead = true
+	died.emit(self, has_been_defeated)
+	
+	if has_been_defeated == false:
+		print("test")
+		player_damaged.emit(90)
+	
 	if path_follow != null and is_instance_valid(path_follow):
 		path_follow.queue_free()
-
+	
 	queue_free()

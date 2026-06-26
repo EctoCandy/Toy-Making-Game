@@ -1,11 +1,12 @@
 extends Node2D
 
-# TODO : Fix lanes not being properly scaled (top and bottom should be stretched
-# to fit the whole height of the screen)
+signal health_changed
 
 @export var player_unit_scene: PackedScene = preload("uid://dt3wdlwjtddbi")
 @export var enemy_unit_scene: PackedScene = preload("uid://daib08ro8i7su")
 @export var robot_builder_scene: PackedScene = preload("res://Scenes/Minigames/RobotBuilder.tscn")
+
+@export var max_health := 1000.0
 
 const RAYCAST_COLLISION_MASK = 4
 
@@ -35,6 +36,7 @@ var score_label: Label = null
 var wave_label: Label = null
 var selected_lane_label: Label = null
 var wave_progress: ProgressBar = null
+var health_bar :TextureProgressBar = null
 
 var lane_dict := {}
 
@@ -51,6 +53,8 @@ var enemies_alive_this_wave := 0
 var left_width := 640.0
 var right_width := 640.0
 var hud_height := 120.0
+
+var health : float
 
 
 func _ready() -> void:
@@ -69,6 +73,8 @@ func _ready() -> void:
 	_apply_screen_layout()
 	_connect_signals()
 	_start_wave()
+	
+	health = max_health
 
 
 func _notification(what: int) -> void:
@@ -158,6 +164,7 @@ func _find_or_create_hud_nodes() -> void:
 	wave_label = _get_or_create_label(right_hud, "WaveLabel")
 	selected_lane_label = _get_or_create_label(right_hud, "SelectedLaneLabel")
 	wave_progress = _get_or_create_progress_bar(right_hud, "WaveProgress")
+	health_bar = _get_or_create_health_bar(right_hud, "PlayerHealthBar")
 
 
 # Uses an existing Label if it exists, otherwise creates one.
@@ -186,49 +193,29 @@ func _get_or_create_progress_bar(parent: Control, node_name: String) -> Progress
 	return new_progress_bar
 
 
-# Positions the builder, minigames, HUD, and scaled lane defense area.
-func _apply_screen_layout() -> void:
+func _get_or_create_health_bar(parent: Control, node_name: String) -> TextureProgressBar:
+	var found_node := parent.get_node_or_null(node_name)
+
+	if found_node is TextureProgressBar:
+		return found_node as TextureProgressBar
 	
+	var new_progress_bar := TextureProgressBar.new()
+	new_progress_bar.name = node_name
+	parent.add_child(new_progress_bar)
+	return new_progress_bar
+
+
+# Positions the HUD.
+func _apply_screen_layout() -> void:
 	# Lanes are now scaled correctly directly in editor to avoid strange
 	# rigidbody behaviour
-	#
-	#var screen_size := get_viewport_rect().size
-#
-	#left_width = screen_size.x * left_screen_percent
-	#right_width = screen_size.x - left_width
-	#hud_height = screen_size.y * hud_height_percent
-#
-	#var margin := 12.0
-#
-	#robot_builder.position = Vector2.ZERO
-	#robot_builder.visible = true
-	#robot_builder.z_index = 1
-#
-	#if minigame_host != null:
-		#minigame_host.position = Vector2.ZERO
-		#minigame_host.size = Vector2(left_width, screen_size.y)
-		#minigame_host.set("host_size", Vector2(left_width, screen_size.y))
-#
-	#var lane_available_size := Vector2(
-		#right_width - margin * 2.0,
-		#screen_size.y - hud_height - margin * 2.0
-	#)
-#
-	#var lane_scale_x := lane_available_size.x / lane_prototype_size.x
-	#var lane_scale_y := lane_available_size.y / lane_prototype_size.y
-	#var final_lane_scale = min(lane_scale_x, lane_scale_y) * lane_extra_shrink
-#
-	#lane_defense_area.position = Vector2(left_width + margin, hud_height + margin)
-	#lane_defense_area.scale = Vector2(final_lane_scale, final_lane_scale)
-	#lane_defense_area.visible = true
-	#lane_defense_area.z_index = 1
-
+	
 	screen_ui.layer = 10
-
+	
 	right_hud.position = Vector2(left_width, 0)
 	right_hud.size = Vector2(right_width, hud_height)
 	right_hud.mouse_filter = Control.MOUSE_FILTER_IGNORE
-
+	
 	_layout_hud_nodes(right_width, hud_height)
 
 
@@ -238,27 +225,27 @@ func _layout_hud_nodes(hud_width: float, hud_height_value: float) -> void:
 	var label_width := hud_width * 0.46
 	var progress_x := label_width + margin * 2.0
 	var progress_width := hud_width - progress_x - margin
-
+	
 	score_label.position = Vector2(margin, 8)
 	score_label.size = Vector2(label_width, 24)
 	score_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-
+	
 	wave_label.position = Vector2(margin, 36)
 	wave_label.size = Vector2(label_width, 24)
 	wave_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-
+	
 	selected_lane_label.position = Vector2(margin, 64)
 	selected_lane_label.size = Vector2(label_width, 24)
 	selected_lane_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-
+	
 	wave_progress.position = Vector2(hud_width * 0.31, hud_height_value * 0.29)
 	wave_progress.size = Vector2(progress_width, 28)
 	wave_progress.min_value = 0
 	wave_progress.max_value = 100
 	wave_progress.mouse_filter = Control.MOUSE_FILTER_IGNORE
-
+	
 	var hud_background := right_hud.get_node_or_null("HudBackground")
-
+	
 	if hud_background is Control:
 		hud_background.position = Vector2.ZERO
 		hud_background.size = Vector2(hud_width, hud_height_value)
@@ -283,16 +270,16 @@ func _connect_signals() -> void:
 # Starts a new enemy-based wave.
 func _start_wave() -> void:
 	wave_in_progress = true
-
+	
 	enemies_this_wave = enemies_per_wave
 	enemies_spawned_this_wave = 0
 	enemies_defeated_this_wave = 0
 	enemies_alive_this_wave = 0
-
+	
 	if spawn_timer != null:
 		if spawn_timer.wait_time <= 0.0:
 			spawn_timer.wait_time = 1.0
-
+		
 		spawn_timer.stop()
 		spawn_timer.start()
 
@@ -456,23 +443,43 @@ func _on_spawn_timer_timeout() -> void:
 # Connects an enemy's defeat signal so the wave knows when it has been killed.
 func _register_enemy_for_wave(enemy: Node) -> void:
 	enemies_alive_this_wave += 1
+	
+	if enemy.has_signal("died"):
+		var defeated_callable := Callable(self, "_on_enemy_death")
+		
+		if not enemy.is_connected("died", defeated_callable):
+			enemy.connect("died", defeated_callable)
+	
+	if enemy.has_signal("player_damaged"):
+		var damage_callable := Callable(self, "_player_take_damage")
 
-	if enemy.has_signal("defeated"):
-		var defeated_callable := Callable(self, "_on_enemy_defeated")
-
-		if not enemy.is_connected("defeated", defeated_callable):
-			enemy.connect("defeated", defeated_callable)
+		if not enemy.is_connected("player_damaged", damage_callable):
+			enemy.connect("player_damaged", damage_callable)
 
 
 # Counts defeated enemies and checks whether the wave is complete.
-func _on_enemy_defeated(enemy: Node) -> void:
+func _on_enemy_death(_enemy: Node, has_been_defeated: bool) -> void:
 	enemies_alive_this_wave = max(0, enemies_alive_this_wave - 1)
 	enemies_defeated_this_wave += 1
-
-	add_score(score_per_enemy)
-
+	
+	if has_been_defeated == true:
+		add_score(score_per_enemy)
+	
 	_check_for_wave_complete()
 	_update_hud()
+
+
+func _player_take_damage(damage):
+	health -= damage
+	print(health)
+	_update_hud()
+	
+	if health <= 0.0:
+		_game_over()
+
+
+func _game_over():
+	get_tree().reload_current_scene.call_deferred()
 
 
 # Ends the wave only after all enemies have spawned and all enemies are defeated.
@@ -529,3 +536,5 @@ func _update_hud() -> void:
 			progress_percent = float(enemies_defeated_this_wave) / float(enemies_this_wave) * 100.0
 
 		wave_progress.value = clamp(progress_percent, 0.0, 100.0)
+		
+	health_changed.emit()

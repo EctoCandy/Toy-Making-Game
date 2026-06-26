@@ -3,6 +3,26 @@
 [ext_resource type="Script" uid="uid://47n0ywaijsjh" path="res://Scripts/main.gd" id="1_ndud4"]
 [ext_resource type="PackedScene" uid="uid://bdhnmds611gw8" path="res://Scenes/Lanes/lane.tscn" id="2_ndud4"]
 [ext_resource type="PackedScene" uid="uid://q0gq8mno4fm" path="res://Scenes/Minigames/RobotBuilder.tscn" id="3_oild2"]
+[ext_resource type="PackedScene" uid="uid://4t183y78j406" path="res://Scenes/Lanes/health_bar.tscn" id="4_po6rj"]
+
+[sub_resource type="Gradient" id="Gradient_0b2sg"]
+colors = PackedColorArray(0.4608078, 0.16061279, 0.068631016, 1, 0.16709885, 0.081441276, 0.05518698, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_oild2"]
+gradient = SubResource("Gradient_0b2sg")
+width = 319
+height = 27
+fill_from = Vector2(1, 0)
+fill_to = Vector2(0, 0)
+
+[sub_resource type="Gradient" id="Gradient_b1u38"]
+colors = PackedColorArray(0.7931711, 0.34591502, 0.26320228, 1, 0.9321078, 0.6216492, 0.51269495, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_262eb"]
+gradient = SubResource("Gradient_b1u38")
+width = 319
+height = 27
+metadata/_snap_count = 2
 
 [node name="Main" type="Node2D" unique_id=1786035646]
 script = ExtResource("1_ndud4")
@@ -11,7 +31,7 @@ script = ExtResource("1_ndud4")
 position = Vector2(527, 111)
 
 [node name="Lane2" parent="." unique_id=137175908 instance=ExtResource("2_ndud4")]
-position = Vector2(531, 290)
+position = Vector2(527, 290)
 
 [node name="Lane3" parent="." unique_id=1254282650 instance=ExtResource("2_ndud4")]
 position = Vector2(527, 470)
@@ -21,6 +41,7 @@ wait_time = 0.5
 autostart = true
 
 [node name="RobotBuilder" parent="." unique_id=1119867491 instance=ExtResource("3_oild2")]
+position = Vector2(0, 6)
 
 [node name="ScreenUI" type="CanvasLayer" parent="." unique_id=516518002]
 
@@ -40,8 +61,13 @@ offset_bottom = 23.0
 offset_right = 40.0
 offset_bottom = 23.0
 
-[node name="WaveProgress" type="ProgressBar" parent="ScreenUI" unique_id=717937290]
-offset_right = 4.0
-offset_bottom = 27.0
+[node name="PlayerHealthBar" parent="ScreenUI" unique_id=1347073494 node_paths=PackedStringArray("target") instance=ExtResource("4_po6rj")]
+offset_left = 825.0
+offset_top = 80.0
+offset_right = 1144.0
+offset_bottom = 107.0
+texture_under = SubResource("GradientTexture2D_oild2")
+texture_progress = SubResource("GradientTexture2D_262eb")
+target = NodePath("../..")
 
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]

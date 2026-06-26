@@ -21,7 +21,7 @@ width = 35
 height = 7
 metadata/_snap_count = 2
 
-[node name="EnemyHealthBar" type="TextureProgressBar" unique_id=1347073494]
+[node name="HealthBar" type="TextureProgressBar" unique_id=1347073494]
 z_index = 1
 offset_right = 35.0
 offset_bottom = 7.0
