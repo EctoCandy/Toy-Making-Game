@@ -2,29 +2,41 @@ extends Node2D
 
 signal robot_completed(unit_data: Dictionary)
 
-@export var snap_distance := 28.0
+@export var snap_distance: float = 28.0
+@export var builder_area_width: float = 640.0
 
-@export var body_head_socket_offset := Vector2(0, -48)
-@export var head_neck_socket_offset := Vector2(0, 48)
+@export var body_head_socket_offset: Vector2 = Vector2(0, -48)
+@export var head_neck_socket_offset: Vector2 = Vector2(0, 48)
 
-@export var auto_reset_after_success := true
-@export var success_reset_delay := 0.6
+@export var required_wind_amount: float = TAU * 3.0
+@export var wind_key_position: Vector2 = Vector2(470, 370)
+@export var wind_progress_position: Vector2 = Vector2(350, 560)
+@export var wind_progress_size: Vector2 = Vector2(240, 28)
+
+@export var auto_reset_after_success: bool = true
+@export var success_reset_delay: float = 0.6
 
 @onready var body_part: Sprite2D = $BodyPart
 @onready var head_choices: Node2D = $HeadChoices
 @onready var minigame_host: MinigameHost = $MinigameHost
 @onready var label: Label = $Label
 
+var wind_up_key: WindUpKey = null
+var wind_progress_bar: ProgressBar = null
+
 var head_parts: Array[Sprite2D] = []
-var starting_positions := {}
+var starting_positions: Dictionary = {}
 
 var dragging_head: Sprite2D = null
-var drag_offset := Vector2.ZERO
+var drag_offset: Vector2 = Vector2.ZERO
 
 var pending_head: Sprite2D = null
-var builder_locked := false
+var builder_locked: bool = false
 
-var head_unit_database := {
+var wind_amount: float = 0.0
+var is_winding: bool = false
+
+var head_unit_database: Dictionary = {
 	"Head1": {
 		"display_name": "Unit 1",
 		"unit_type": "unit_1",
@@ -56,33 +68,84 @@ func _ready() -> void:
 	label.text = "Choose a head, attach it to the body, then complete the minigame."
 
 	body_part.centered = true
+	body_part.z_index = 1
+
+	head_choices.z_index = 2
 
 	for child in head_choices.get_children():
 		if child is Sprite2D:
-			var head := child as Sprite2D
+			var head: Sprite2D = child as Sprite2D
 
 			head.centered = true
-			head.z_index = 1
+			head.z_index = 2
 			head_parts.append(head)
 			starting_positions[head] = head.global_position
 
-			var unit_data := _get_unit_data_for_head(head)
+			var unit_data: Dictionary = _get_unit_data_for_head(head)
 			head.set_meta("unit_data", unit_data)
 
-	minigame_host.minigame_finished.connect(_on_minigame_finished)
+	var minigame_finished_callable: Callable = Callable(self, "_on_minigame_finished")
+
+	if not minigame_host.minigame_finished.is_connected(minigame_finished_callable):
+		minigame_host.minigame_finished.connect(minigame_finished_callable)
+
+	_setup_wind_up_nodes()
 
 
-# Handles dragging heads around the builder area.
+# Finds and prepares the wind-up key and progress bar.
+func _setup_wind_up_nodes() -> void:
+	var found_key: Node = get_node_or_null("WindUpKey")
+	var found_bar: Node = get_node_or_null("WindProgressBar")
+
+	wind_up_key = found_key as WindUpKey
+	wind_progress_bar = found_bar as ProgressBar
+
+	if wind_up_key != null:
+		var crank_callable: Callable = Callable(self, "_on_wind_up_key_cranked")
+
+		if not wind_up_key.cranked.is_connected(crank_callable):
+			wind_up_key.cranked.connect(crank_callable)
+
+		wind_up_key.position = wind_key_position
+		wind_up_key.rotation = 0.0
+		wind_up_key.z_index = 5000
+		wind_up_key.z_as_relative = false
+
+		# The key starts hidden and disabled.
+		wind_up_key.set_enabled(false)
+	else:
+		push_warning("RobotBuilder is missing a direct child named WindUpKey.")
+
+	if wind_progress_bar != null:
+		wind_progress_bar.position = wind_progress_position
+		wind_progress_bar.size = wind_progress_size
+		wind_progress_bar.z_index = 5001
+		wind_progress_bar.z_as_relative = false
+		wind_progress_bar.min_value = 0
+		wind_progress_bar.max_value = required_wind_amount
+		wind_progress_bar.value = 0
+		wind_progress_bar.mouse_filter = Control.MOUSE_FILTER_STOP
+		wind_progress_bar.hide()
+	else:
+		push_warning("RobotBuilder is missing a direct child named WindProgressBar.")
+
+
+# Handles dragging heads only when the builder is usable.
 func _unhandled_input(event: InputEvent) -> void:
 	if builder_locked:
 		return
-	
+
+	if is_winding:
+		return
+
 	if minigame_host.visible:
 		return
 
 	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT:
-			if event.pressed:
+		var mouse_event: InputEventMouseButton = event as InputEventMouseButton
+
+		if mouse_event.button_index == MOUSE_BUTTON_LEFT:
+			if mouse_event.pressed:
 				_start_drag()
 			else:
 				_stop_drag()
@@ -94,7 +157,10 @@ func _unhandled_input(event: InputEvent) -> void:
 
 # Starts dragging whichever head the player clicked.
 func _start_drag() -> void:
-	var mouse_pos := get_global_mouse_position()
+	var mouse_pos: Vector2 = get_global_mouse_position()
+
+	if mouse_pos.x > builder_area_width:
+		return
 
 	dragging_head = _get_head_under_mouse(mouse_pos)
 
@@ -102,7 +168,7 @@ func _start_drag() -> void:
 		drag_offset = dragging_head.global_position - mouse_pos
 		dragging_head.z_index = 10
 
-		var unit_data: Dictionary = dragging_head.get_meta("unit_data", {})
+		var unit_data: Dictionary = _get_stored_unit_data(dragging_head)
 		label.text = "Selected: " + str(unit_data.get("display_name", "Unknown Unit"))
 
 
@@ -130,10 +196,10 @@ func _mouse_is_over_sprite(sprite: Sprite2D, mouse_pos: Vector2) -> bool:
 	if sprite.texture == null:
 		return false
 
-	var local_mouse_pos := sprite.to_local(mouse_pos)
-	var texture_size := sprite.texture.get_size()
+	var local_mouse_pos: Vector2 = sprite.to_local(mouse_pos)
+	var texture_size: Vector2 = sprite.texture.get_size()
 
-	var sprite_rect := Rect2(
+	var sprite_rect: Rect2 = Rect2(
 		-texture_size / 2.0,
 		texture_size
 	)
@@ -143,10 +209,10 @@ func _mouse_is_over_sprite(sprite: Sprite2D, mouse_pos: Vector2) -> bool:
 
 # Checks whether the selected head is close enough to snap onto the body.
 func _try_connect_head(head: Sprite2D) -> void:
-	var body_socket_global := body_part.to_global(body_head_socket_offset)
-	var head_socket_global := head.to_global(head_neck_socket_offset)
+	var body_socket_global: Vector2 = body_part.to_global(body_head_socket_offset)
+	var head_socket_global: Vector2 = head.to_global(head_neck_socket_offset)
 
-	var distance := body_socket_global.distance_to(head_socket_global)
+	var distance: float = body_socket_global.distance_to(head_socket_global)
 
 	if distance <= snap_distance:
 		_snap_head_to_body(head)
@@ -154,7 +220,7 @@ func _try_connect_head(head: Sprite2D) -> void:
 		pending_head = head
 		builder_locked = true
 
-		var unit_data: Dictionary = pending_head.get_meta("unit_data", {})
+		var unit_data: Dictionary = _get_stored_unit_data(pending_head)
 		label.text = "Building: " + str(unit_data.get("display_name", "Unknown Unit"))
 
 		minigame_host.start_random_minigame({
@@ -167,10 +233,10 @@ func _try_connect_head(head: Sprite2D) -> void:
 
 # Snaps the head into the correct position on top of the body.
 func _snap_head_to_body(head: Sprite2D) -> void:
-	var body_socket_global := body_part.to_global(body_head_socket_offset)
-	var head_socket_global := head.to_global(head_neck_socket_offset)
+	var body_socket_global: Vector2 = body_part.to_global(body_head_socket_offset)
+	var head_socket_global: Vector2 = head.to_global(head_neck_socket_offset)
 
-	var movement_needed := body_socket_global - head_socket_global
+	var movement_needed: Vector2 = body_socket_global - head_socket_global
 	head.global_position += movement_needed
 
 
@@ -187,20 +253,90 @@ func _on_minigame_finished(success: bool) -> void:
 		builder_locked = false
 		return
 
+	# IMPORTANT: do not complete the robot here.
+	# The robot only completes after wind-up.
+	_start_wind_up_step()
+
+
+# Starts the final wind-up step after the minigame succeeds.
+func _start_wind_up_step() -> void:
+	is_winding = true
+	builder_locked = true
+	wind_amount = 0.0
+
+	label.text = "Wind up the key to finish the robot."
+
+	if wind_up_key == null:
+		label.text = "ERROR: WindUpKey missing."
+		push_warning("Cannot start wind-up because WindUpKey is missing.")
+		return
+
+	wind_up_key.position = wind_key_position
+	wind_up_key.rotation = 0.0
+	wind_up_key.z_index = 5000
+	wind_up_key.z_as_relative = false
+	wind_up_key.set_enabled(true)
+
+	if wind_progress_bar != null:
+		wind_progress_bar.position = wind_progress_position
+		wind_progress_bar.size = wind_progress_size
+		wind_progress_bar.max_value = required_wind_amount
+		wind_progress_bar.value = 0
+		wind_progress_bar.z_index = 5001
+		wind_progress_bar.z_as_relative = false
+		wind_progress_bar.show()
+
+
+# Adds wind-up progress whenever the key is turned.
+func _on_wind_up_key_cranked(distance: float) -> void:
+	if not is_winding:
+		return
+
+	wind_amount += abs(distance)
+
+	if wind_progress_bar != null:
+		wind_progress_bar.value = wind_amount
+
+	var safe_required_amount: float = max(required_wind_amount, 0.001)
+	var percent: int = int(round((wind_amount / safe_required_amount) * 100.0))
+
+	label.text = "Winding: " + str(percent) + "%"
+
+	if wind_amount >= required_wind_amount:
+		_finish_wind_up_step()
+
+
+# Finishes the wind-up step and completes the robot.
+func _finish_wind_up_step() -> void:
+	if not is_winding:
+		return
+
+	is_winding = false
+
+	if wind_up_key != null:
+		wind_up_key.set_enabled(false)
+
+	if wind_progress_bar != null:
+		wind_progress_bar.hide()
+
 	_complete_robot_from_head(pending_head)
 
 
 # Creates the completed unit data based on which head was attached.
 func _complete_robot_from_head(head: Sprite2D) -> void:
-	var unit_data: Dictionary = head.get_meta("unit_data", {}).duplicate(true)
+	if head == null:
+		reset_builder()
+		return
+
+	var unit_data: Dictionary = _get_stored_unit_data(head).duplicate(true)
 
 	unit_data["head_node_name"] = head.name
+	unit_data["wind_up_power"] = wind_amount
+	unit_data["is_wound_up"] = true
 
 	label.text = "Completed: " + str(unit_data.get("display_name", "Unknown Unit"))
 
-	print("Robot completed:")
-	print(unit_data)
-
+	# This is the only place the robot should emit as completed.
 	robot_completed.emit(unit_data)
 
 	if auto_reset_after_success:
@@ -220,6 +356,17 @@ func reset_builder() -> void:
 	pending_head = null
 	dragging_head = null
 	builder_locked = false
+	is_winding = false
+	wind_amount = 0.0
+
+	if wind_up_key != null:
+		wind_up_key.set_enabled(false)
+		wind_up_key.position = wind_key_position
+		wind_up_key.rotation = 0.0
+
+	if wind_progress_bar != null:
+		wind_progress_bar.value = 0
+		wind_progress_bar.hide()
 
 	label.text = "Choose a head, attach it to the body, then complete the minigame."
 
@@ -230,12 +377,33 @@ func _return_head_to_start(head: Sprite2D) -> void:
 		head.global_position = starting_positions[head]
 
 
+# Gets the unit data saved on a head.
+func _get_stored_unit_data(head: Sprite2D) -> Dictionary:
+	var stored_data: Variant = head.get_meta("unit_data", {})
+
+	if stored_data is Dictionary:
+		return stored_data as Dictionary
+
+	return {
+		"display_name": "Unknown Unit",
+		"unit_type": "unknown_unit",
+		"damage": 1,
+		"move_speed": 50,
+		"lane_cost": 1,
+		"behavior": "basic"
+	}
+
+
 # Looks up what unit a specific numbered head should create.
 func _get_unit_data_for_head(head: Sprite2D) -> Dictionary:
-	var head_name := str(head.name)
+	var head_name: String = str(head.name)
 
 	if head_unit_database.has(head_name):
-		return head_unit_database[head_name].duplicate(true)
+		var raw_data: Variant = head_unit_database[head_name]
+
+		if raw_data is Dictionary:
+			var copied_data: Dictionary = (raw_data as Dictionary).duplicate(true)
+			return copied_data
 
 	push_warning("No unit data found for head named: " + head_name)
 

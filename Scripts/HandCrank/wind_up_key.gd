@@ -1,55 +1,108 @@
 class_name WindUpKey
 extends Node2D
 
-# slightly modified code from HandCrank
+signal cranked(distance: float)
 
-# notifies listeners when this is turned, and by how much
-signal cranked(distance : float)
+@export var max_rotation_speed_degrees: float = 1080.0
 
-# how far the key should be able to rotate in one second (deg)
-@export var MAX_ROTATION_SPEED : float = 1080.0
+var following_mouse: bool = false
+var max_rotation_speed_rad: float = 0.0
+var active: bool = false
 
-# tracks whether the key is currently following the mouse
-var following_mouse : bool = false
-# used to convert the max rotation speed to radians for godot's use
-var max_rotation_speed_rad : float
-# stores the position of the wind up key last frame
-var last_crank_pos : float
 
 func _ready() -> void:
-	max_rotation_speed_rad = deg_to_rad(MAX_ROTATION_SPEED)
-	$ClickableArea1.input_event.connect(on_crank_handle_input)
-	$ClickableArea2.input_event.connect(on_crank_handle_input)
-	
-	last_crank_pos = rotation
+	max_rotation_speed_rad = deg_to_rad(max_rotation_speed_degrees)
+
+	_connect_clickable_area("ClickableArea1")
+	_connect_clickable_area("ClickableArea2")
+
+	# The key should always start hidden until RobotBuilder turns it on.
+	set_enabled(false)
 
 
-# begin following the mouse when the crank is clicked
-func on_crank_handle_input(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
-	if event.is_action_pressed("left_click"):
-		following_mouse = true
+# Connects one clickable area to the wind-up input.
+func _connect_clickable_area(area_name: String) -> void:
+	var area_node: Node = get_node_or_null(area_name)
+
+	if area_node == null:
+		push_warning("WindUpKey is missing: " + area_name)
+		return
+
+	var area: Area2D = area_node as Area2D
+
+	if area == null:
+		push_warning(area_name + " is not an Area2D.")
+		return
+
+	var input_callable: Callable = Callable(self, "_on_clickable_area_input")
+
+	if not area.input_event.is_connected(input_callable):
+		area.input_event.connect(input_callable)
 
 
-# stop following the mouse when it gets too far from the crank handle
-func on_mouse_exited_range() -> void:
+# Turns the wind-up key on or off.
+func set_enabled(value: bool) -> void:
+	active = value
+	visible = value
 	following_mouse = false
+	set_physics_process(value)
+
+	z_index = 5000
+	z_as_relative = false
+
+	_set_area_enabled("ClickableArea1", value)
+	_set_area_enabled("ClickableArea2", value)
 
 
+# Enables or disables clicking on one Area2D.
+func _set_area_enabled(area_name: String, value: bool) -> void:
+	var area_node: Node = get_node_or_null(area_name)
+
+	if area_node == null:
+		return
+
+	var area: Area2D = area_node as Area2D
+
+	if area == null:
+		return
+
+	area.input_pickable = value
+	area.monitoring = value
+	area.monitorable = value
+
+
+# Starts following the mouse when the key is clicked.
+func _on_clickable_area_input(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
+	if not active:
+		return
+
+	if event is InputEventMouseButton:
+		var mouse_event: InputEventMouseButton = event as InputEventMouseButton
+
+		if mouse_event.button_index == MOUSE_BUTTON_LEFT and mouse_event.pressed:
+			following_mouse = true
+
+
+# Rotates the key toward the mouse while the player holds left click.
 func _physics_process(delta: float) -> void:
-	if following_mouse:
-		# stop following the mouse when the mouse button is released
-		if not Input.is_action_pressed("left_click"):
-			following_mouse = false
-			return
-		# rotates the crank toward the mouse cursor, limited by the max rotation speed
-			# Why are multiplying max rot by delta ?
-		var max_frame_rotation = max_rotation_speed_rad * delta
-		var frame_rotation = clamp(
-				get_angle_to(get_global_mouse_position()),
-				 -max_frame_rotation,
-				 max_frame_rotation
-			)
-		rotation += frame_rotation
-		# let listeners know the crank was cranked
-		cranked.emit(frame_rotation)
-		last_crank_pos = rotation
+	if not active:
+		return
+
+	if not following_mouse:
+		return
+
+	if not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+		following_mouse = false
+		return
+
+	var max_frame_rotation: float = max_rotation_speed_rad * delta
+
+	var frame_rotation: float = clampf(
+		get_angle_to(get_global_mouse_position()),
+		-max_frame_rotation,
+		max_frame_rotation
+	)
+
+	rotation += frame_rotation
+
+	cranked.emit(frame_rotation)
