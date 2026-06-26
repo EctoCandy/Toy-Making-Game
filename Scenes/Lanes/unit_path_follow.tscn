@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://ct0ieme7ybwxk" path="res://Scripts/Lanes/unit_path_follow.gd" id="1_ox7ku"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ln6rh"]
-size = Vector2(159, 196)
+size = Vector2(159, 162)
 
 [node name="UnitPathFollow" type="PathFollow2D" unique_id=922385664]
 loop = false

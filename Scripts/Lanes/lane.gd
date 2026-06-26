@@ -1,7 +1,7 @@
 extends Node2D
 
 const UNIT_PATH_FOLLOW = preload("uid://dtulup478vp38")
-const SPAWN_RANGE = 80.0
+const SPAWN_RANGE = 67.0
 
 var colors = [
 	Color(0.842, 0.319, 0.232, 1.0),

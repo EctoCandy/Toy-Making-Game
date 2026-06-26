@@ -8,16 +8,13 @@
 script = ExtResource("1_ndud4")
 
 [node name="Lane1" parent="." unique_id=1811325806 instance=ExtResource("2_ndud4")]
-position = Vector2(527, 4)
-scale = Vector2(0.54, 1)
+position = Vector2(527, 111)
 
 [node name="Lane2" parent="." unique_id=137175908 instance=ExtResource("2_ndud4")]
-position = Vector2(527, 215.405)
-scale = Vector2(0.54, 1)
+position = Vector2(531, 290)
 
 [node name="Lane3" parent="." unique_id=1254282650 instance=ExtResource("2_ndud4")]
-position = Vector2(527, 426.875)
-scale = Vector2(0.54, 1)
+position = Vector2(527, 470)
 
 [node name="SpawnTimer" type="Timer" parent="." unique_id=247059653]
 wait_time = 0.5

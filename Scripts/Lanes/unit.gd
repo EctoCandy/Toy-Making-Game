@@ -7,7 +7,6 @@ class_name Unit
 ## The rigidbody tries it's best to follow its path "guide" and stops when it
 ## has collided with adversary or the "guide" has gotten too far away
 
-# TODO: Lock rotation without changing the way units interact with each other
 
 signal health_changed
 signal defeated(unit: Unit)
@@ -50,7 +49,6 @@ func _process(_delta: float) -> void:
 	# Reversing rigidbody rotation to keep interesting physics behaviour
 	# but also have upright sprites >:)
 	pivot.rotation = -rotation
-	print(pivot.rotation)
 	
 	if enemies_in_range.size() == 0:
 		target_pos = path_guide.global_position
@@ -65,7 +63,7 @@ func _process(_delta: float) -> void:
 		#is_away_from_guide = true
 	#elif dist_from_target < reconnecting_range:
 		#is_away_from_guide = false
-	#
+	
 	
 	## CHECKING COLLISION WITH ADVERSARY
 	if (

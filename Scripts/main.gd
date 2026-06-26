@@ -153,7 +153,7 @@ func _find_or_create_hud_nodes() -> void:
 		right_hud = Panel.new()
 		right_hud.name = "RightHUD"
 		screen_ui.add_child(right_hud)
-
+	
 	score_label = _get_or_create_label(right_hud, "ScoreLabel")
 	wave_label = _get_or_create_label(right_hud, "WaveLabel")
 	selected_lane_label = _get_or_create_label(right_hud, "SelectedLaneLabel")
@@ -188,7 +188,11 @@ func _get_or_create_progress_bar(parent: Control, node_name: String) -> Progress
 
 # Positions the builder, minigames, HUD, and scaled lane defense area.
 func _apply_screen_layout() -> void:
-	var screen_size := get_viewport_rect().size
+	
+	# Lanes are now scaled correctly directly in editor to avoid strange
+	# rigidbody behaviour
+	#
+	#var screen_size := get_viewport_rect().size
 #
 	#left_width = screen_size.x * left_screen_percent
 	#right_width = screen_size.x - left_width
@@ -247,7 +251,7 @@ func _layout_hud_nodes(hud_width: float, hud_height_value: float) -> void:
 	selected_lane_label.size = Vector2(label_width, 24)
 	selected_lane_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
-	wave_progress.position = Vector2(progress_x, hud_height_value * 0.36)
+	wave_progress.position = Vector2(hud_width * 0.31, hud_height_value * 0.29)
 	wave_progress.size = Vector2(progress_width, 28)
 	wave_progress.min_value = 0
 	wave_progress.max_value = 100
