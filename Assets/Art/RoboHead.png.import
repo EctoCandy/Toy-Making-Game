@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c86sbraccobbm"
-path="res://.godot/imported/ToyCrankSpritesheet.png-b8495d91c11fa61a300638a437ea5565.ctex"
+uid="uid://cpvvyhm5pd78n"
+path="res://.godot/imported/RoboHead.png-8018b886f2e5ffeffd800ff41ce1a44f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Art/ToyCrankSpritesheet.png"
-dest_files=["res://.godot/imported/ToyCrankSpritesheet.png-b8495d91c11fa61a300638a437ea5565.ctex"]
+source_file="res://Assets/Art/RoboHead.png"
+dest_files=["res://.godot/imported/RoboHead.png-8018b886f2e5ffeffd800ff41ce1a44f.ctex"]
 
 [params]
 

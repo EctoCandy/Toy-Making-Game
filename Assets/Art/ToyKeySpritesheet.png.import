@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dt83ps7f6x7na"
-path="res://.godot/imported/RobotBody.png-37c5d13767e2889788fa54ade83b957b.ctex"
+uid="uid://btntrt7h8fjpe"
+path="res://.godot/imported/ToyKeySpritesheet.png-9211186da6775e3df6c65bcf29ff4a99.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Art/RobotBody.png"
-dest_files=["res://.godot/imported/RobotBody.png-37c5d13767e2889788fa54ade83b957b.ctex"]
+source_file="res://Assets/Art/ToyKeySpritesheet.png"
+dest_files=["res://.godot/imported/ToyKeySpritesheet.png-9211186da6775e3df6c65bcf29ff4a99.ctex"]
 
 [params]
 

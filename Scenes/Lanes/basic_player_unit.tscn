@@ -2,69 +2,69 @@
 
 [ext_resource type="Script" uid="uid://cvasj2b5ad283" path="res://Scripts/Lanes/basic_player_unit.gd" id="1_oovt2"]
 [ext_resource type="PackedScene" uid="uid://4t183y78j406" path="res://Scenes/Lanes/health_bar.tscn" id="2_rgwky"]
-[ext_resource type="Texture2D" uid="uid://bljipspqn4m3q" path="res://Assets/Art/missle_head-export.png" id="3_0hy33"]
-[ext_resource type="Texture2D" uid="uid://dt83ps7f6x7na" path="res://Assets/Art/RobotBody.png" id="3_4stia"]
-[ext_resource type="Texture2D" uid="uid://c86sbraccobbm" path="res://Assets/Art/ToyCrankSpritesheet.png" id="3_w52iy"]
+[ext_resource type="Texture2D" uid="uid://btntrt7h8fjpe" path="res://Assets/Art/ToyKeySpritesheet.png" id="3_nyo6d"]
+[ext_resource type="Texture2D" uid="uid://ci8hyucjr6mx5" path="res://Assets/Art/RoboBody.png" id="4_nyo6d"]
+[ext_resource type="Texture2D" uid="uid://cpvvyhm5pd78n" path="res://Assets/Art/RoboHead.png" id="5_nyo6d"]
 [ext_resource type="Texture2D" uid="uid://bsc6k8joigrk6" path="res://Assets/Art/TankTreads.png" id="5_pxdfh"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_pxdfh"]
-atlas = ExtResource("3_w52iy")
+[sub_resource type="AtlasTexture" id="AtlasTexture_24roy"]
+atlas = ExtResource("3_nyo6d")
 region = Rect2(0, 0, 96, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_0hy33"]
-atlas = ExtResource("3_w52iy")
+[sub_resource type="AtlasTexture" id="AtlasTexture_asedc"]
+atlas = ExtResource("3_nyo6d")
 region = Rect2(96, 0, 96, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_b77yk"]
-atlas = ExtResource("3_w52iy")
+[sub_resource type="AtlasTexture" id="AtlasTexture_w0fe7"]
+atlas = ExtResource("3_nyo6d")
 region = Rect2(192, 0, 96, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_v168y"]
-atlas = ExtResource("3_w52iy")
+[sub_resource type="AtlasTexture" id="AtlasTexture_j5hcy"]
+atlas = ExtResource("3_nyo6d")
 region = Rect2(288, 0, 96, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_y550c"]
-atlas = ExtResource("3_w52iy")
+[sub_resource type="AtlasTexture" id="AtlasTexture_uoxdv"]
+atlas = ExtResource("3_nyo6d")
 region = Rect2(384, 0, 96, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_hoapm"]
-atlas = ExtResource("3_w52iy")
+[sub_resource type="AtlasTexture" id="AtlasTexture_nqeny"]
+atlas = ExtResource("3_nyo6d")
 region = Rect2(480, 0, 96, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_86gcj"]
-atlas = ExtResource("3_w52iy")
+[sub_resource type="AtlasTexture" id="AtlasTexture_6syet"]
+atlas = ExtResource("3_nyo6d")
 region = Rect2(576, 0, 96, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_jf7f8"]
-atlas = ExtResource("3_w52iy")
+[sub_resource type="AtlasTexture" id="AtlasTexture_eqv03"]
+atlas = ExtResource("3_nyo6d")
 region = Rect2(672, 0, 96, 96)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_g4v7s"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_k4so2"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_pxdfh")
+"texture": SubResource("AtlasTexture_24roy")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_0hy33")
+"texture": SubResource("AtlasTexture_asedc")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_b77yk")
+"texture": SubResource("AtlasTexture_w0fe7")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_v168y")
+"texture": SubResource("AtlasTexture_j5hcy")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_y550c")
+"texture": SubResource("AtlasTexture_uoxdv")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hoapm")
+"texture": SubResource("AtlasTexture_nqeny")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_86gcj")
+"texture": SubResource("AtlasTexture_6syet")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_jf7f8")
+"texture": SubResource("AtlasTexture_eqv03")
 }],
 "loop": 1,
 "name": &"default",
@@ -115,11 +115,11 @@ texture = ExtResource("5_pxdfh")
 [node name="CrankSprite" type="AnimatedSprite2D" parent="Pivot/Sprites" unique_id=1837397419]
 position = Vector2(-36.999996, 0)
 scale = Vector2(0.4, 0.4)
-sprite_frames = SubResource("SpriteFrames_g4v7s")
+sprite_frames = SubResource("SpriteFrames_k4so2")
 
 [node name="BodySprite" type="Sprite2D" parent="Pivot/Sprites" unique_id=1967644059]
 scale = Vector2(0.4, 0.4)
-texture = ExtResource("3_4stia")
+texture = ExtResource("4_nyo6d")
 
 [node name="TreadSpriteL" type="Sprite2D" parent="Pivot/Sprites" unique_id=1169312529]
 position = Vector2(-12, 18)
@@ -127,12 +127,11 @@ scale = Vector2(0.4, 0.4)
 texture = ExtResource("5_pxdfh")
 
 [node name="HeadSprite" type="Sprite2D" parent="Pivot/Sprites" unique_id=688149783]
-position = Vector2(2, -35)
+position = Vector2(3.75, -41.25)
 scale = Vector2(0.45, 0.45)
-texture = ExtResource("3_0hy33")
+texture = ExtResource("5_nyo6d")
 
 [node name="HealthBar" parent="Pivot" unique_id=1347073494 node_paths=PackedStringArray("unit") instance=ExtResource("2_rgwky")]
-visible = true
 z_index = 0
 offset_left = -9.0
 offset_top = -31.0
