@@ -7,9 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://c86sbraccobbm" path="res://Assets/Art/ToyCrankSpritesheet.png" id="3_w52iy"]
 [ext_resource type="Texture2D" uid="uid://bsc6k8joigrk6" path="res://Assets/Art/TankTreads.png" id="5_pxdfh"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_my7ai"]
-radius = 17.117243
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_pxdfh"]
 atlas = ExtResource("3_w52iy")
 region = Rect2(0, 0, 96, 96)
@@ -74,6 +71,27 @@ animations = [{
 "speed": 8.0
 }]
 
+[sub_resource type="Gradient" id="Gradient_0b2sg"]
+colors = PackedColorArray(0.4608078, 0.16061279, 0.068631016, 1, 0.16709885, 0.081441276, 0.05518698, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_nyo6d"]
+gradient = SubResource("Gradient_0b2sg")
+width = 22
+height = 11
+fill_from = Vector2(1, 0)
+fill_to = Vector2(0, 0)
+
+[sub_resource type="Gradient" id="Gradient_fa85u"]
+colors = PackedColorArray(0.7931711, 0.34591502, 0.26320228, 1, 0.9321078, 0.6216492, 0.51269495, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_24roy"]
+gradient = SubResource("Gradient_fa85u")
+width = 22
+height = 11
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_nyo6d"]
+radius = 17.029387
+
 [node name="BasicPlayerUnit" type="RigidBody2D" unique_id=1349566713]
 collision_mask = 11
 mass = 0.1
@@ -82,52 +100,58 @@ contact_monitor = true
 max_contacts_reported = 7
 script = ExtResource("1_oovt2")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=489891610]
-shape = SubResource("CircleShape2D_my7ai")
+[node name="Pivot" type="Node2D" parent="." unique_id=1747119850]
 
-[node name="Polygon2D" type="Polygon2D" parent="." unique_id=907939166]
-color = Color(0.23810166, 0.26133683, 0.27383968, 1)
-polygon = PackedVector2Array(-13.262101, -9.818968, 9.536743e-07, -16.45002, 13.262109, -9.818968, 15.472455, 1.2327856, 11.051755, 12.284538, 9.536743e-07, 16.981533, -11.051751, 12.284538, -16, 1)
+[node name="Sprites" type="Node2D" parent="Pivot" unique_id=1312190282]
+position = Vector2(0, -23)
+scale = Vector2(0.8, 0.8)
 
-[node name="AttackCooldown" type="Timer" parent="." unique_id=1212120893]
-wait_time = 0.1
-
-[node name="HealthBarPivot" type="Node2D" parent="." unique_id=1468327187]
-
-[node name="HealthBar" parent="HealthBarPivot" unique_id=1347073494 node_paths=PackedStringArray("unit") instance=ExtResource("2_rgwky")]
-offset_left = -18.0
-offset_top = -31.0
-offset_right = 17.0
-offset_bottom = -24.0
-unit = NodePath("../..")
-
-[node name="Sprites" type="Node2D" parent="." unique_id=1312190282]
-visible = false
-
-[node name="TreadSpriteR" type="Sprite2D" parent="Sprites" unique_id=707859760]
+[node name="TreadSpriteR" type="Sprite2D" parent="Pivot/Sprites" unique_id=707859760]
 z_as_relative = false
 position = Vector2(18.999998, 18)
 scale = Vector2(0.4, 0.4)
 texture = ExtResource("5_pxdfh")
 
-[node name="CrankSprite" type="AnimatedSprite2D" parent="Sprites" unique_id=1837397419]
+[node name="CrankSprite" type="AnimatedSprite2D" parent="Pivot/Sprites" unique_id=1837397419]
 position = Vector2(-36.999996, 0)
 scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_g4v7s")
 
-[node name="BodySprite" type="Sprite2D" parent="Sprites" unique_id=1967644059]
+[node name="BodySprite" type="Sprite2D" parent="Pivot/Sprites" unique_id=1967644059]
 scale = Vector2(0.4, 0.4)
 texture = ExtResource("3_4stia")
 
-[node name="TreadSpriteL" type="Sprite2D" parent="Sprites" unique_id=1169312529]
+[node name="TreadSpriteL" type="Sprite2D" parent="Pivot/Sprites" unique_id=1169312529]
 position = Vector2(-12, 18)
 scale = Vector2(0.4, 0.4)
 texture = ExtResource("5_pxdfh")
 
-[node name="HeadSprite" type="Sprite2D" parent="Sprites" unique_id=688149783]
+[node name="HeadSprite" type="Sprite2D" parent="Pivot/Sprites" unique_id=688149783]
 position = Vector2(2, -35)
 scale = Vector2(0.45, 0.45)
 texture = ExtResource("3_0hy33")
+
+[node name="HealthBar" parent="Pivot" unique_id=1347073494 node_paths=PackedStringArray("unit") instance=ExtResource("2_rgwky")]
+visible = true
+z_index = 0
+offset_left = -9.0
+offset_top = -31.0
+offset_right = 13.0
+offset_bottom = -20.0
+texture_under = SubResource("GradientTexture2D_nyo6d")
+texture_progress = SubResource("GradientTexture2D_24roy")
+unit = NodePath("../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=489891610]
+position = Vector2(1, -10)
+shape = SubResource("CircleShape2D_nyo6d")
+
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=907939166]
+visible = false
+color = Color(0.23810166, 0.26133683, 0.27383968, 1)
+polygon = PackedVector2Array(-13.262101, -9.818968, 9.536743e-07, -16.45002, 13.262109, -9.818968, 15.472455, 1.2327856, 11.051755, 12.284538, 9.536743e-07, 16.981533, -11.051751, 12.284538, -16, 1)
+
+[node name="AttackCooldown" type="Timer" parent="." unique_id=1212120893]
 
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
 [connection signal="timeout" from="AttackCooldown" to="." method="_on_attack_cooldown_timeout"]

@@ -12,19 +12,19 @@ height = 7
 fill_from = Vector2(1, 0)
 fill_to = Vector2(0, 0)
 
-[sub_resource type="Gradient" id="Gradient_fa85u"]
+[sub_resource type="Gradient" id="Gradient_b1u38"]
 colors = PackedColorArray(0.7931711, 0.34591502, 0.26320228, 1, 0.9321078, 0.6216492, 0.51269495, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_k5ul3"]
-gradient = SubResource("Gradient_fa85u")
+gradient = SubResource("Gradient_b1u38")
 width = 35
 height = 7
+metadata/_snap_count = 2
 
 [node name="EnemyHealthBar" type="TextureProgressBar" unique_id=1347073494]
-visible = false
 z_index = 1
-offset_right = 20.0
-offset_bottom = 5.0
+offset_right = 35.0
+offset_bottom = 7.0
 value = 100.0
 texture_under = SubResource("GradientTexture2D_hm7mj")
 texture_progress = SubResource("GradientTexture2D_k5ul3")

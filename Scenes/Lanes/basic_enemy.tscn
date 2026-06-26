@@ -15,25 +15,25 @@ contact_monitor = true
 max_contacts_reported = 7
 script = ExtResource("1_lnkmd")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=489891610]
-shape = SubResource("CircleShape2D_my7ai")
+[node name="Pivot" type="Node2D" parent="." unique_id=80256902]
 
-[node name="Polygon2D" type="Polygon2D" parent="." unique_id=907939166]
-self_modulate = Color(0.43134022, 0.43134025, 0.43134025, 1)
-color = Color(1, 1, 1, 0.531)
-polygon = PackedVector2Array(-13.262101, -9.818968, 9.536743e-07, -16.45002, 13.262109, -9.818968, 15.472455, 1.2327856, 11.051755, 12.284538, 9.536743e-07, 16.981533, -11.051751, 12.284538, -15.472451, 1.2327856)
-
-[node name="AttackCooldown" type="Timer" parent="." unique_id=758884567]
-wait_time = 0.1
-
-[node name="HealthBarPivot" type="Node2D" parent="." unique_id=705748251]
-
-[node name="HealthBar" parent="HealthBarPivot" unique_id=1347073494 node_paths=PackedStringArray("unit") instance=ExtResource("2_fecjr")]
+[node name="HealthBar" parent="Pivot" unique_id=1347073494 node_paths=PackedStringArray("unit") instance=ExtResource("2_fecjr")]
 offset_left = -18.0
 offset_top = -32.0
 offset_right = 17.0
 offset_bottom = -25.0
 unit = NodePath("../..")
+
+[node name="Polygon2D" type="Polygon2D" parent="Pivot" unique_id=907939166]
+self_modulate = Color(0.43134022, 0.43134025, 0.43134025, 1)
+color = Color(1, 1, 1, 0.531)
+polygon = PackedVector2Array(-13.262101, -9.818968, 9.536743e-07, -16.45002, 13.262109, -9.818968, 15.472455, 1.2327856, 11.051755, 12.284538, 9.536743e-07, 16.981533, -11.051751, 12.284538, -15.472451, 1.2327856)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=489891610]
+shape = SubResource("CircleShape2D_my7ai")
+
+[node name="AttackCooldown" type="Timer" parent="." unique_id=758884567]
+wait_time = 0.1
 
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
 [connection signal="timeout" from="AttackCooldown" to="." method="_on_attack_cooldown_timeout"]

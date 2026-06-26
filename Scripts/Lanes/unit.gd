@@ -7,8 +7,6 @@ class_name Unit
 ## The rigidbody tries it's best to follow its path "guide" and stops when it
 ## has collided with adversary or the "guide" has gotten too far away
 
-# TODO: Make "guide" always be ahead/close to unit on x axis so units don't go
-# backwards after being pushed away from guide
 # TODO: Lock rotation without changing the way units interact with each other
 
 signal health_changed
@@ -31,7 +29,8 @@ var is_away_from_guide := false
 var is_in_combat := false
 
 @onready var attack_cooldown: Timer = $AttackCooldown
-@onready var health_bar: TextureProgressBar = $HealthBarPivot/HealthBar
+@onready var pivot: Node2D = $Pivot
+@onready var health_bar: TextureProgressBar = $Pivot/HealthBar
 
 
 func _ready() -> void:
@@ -46,10 +45,12 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
+	# Reversing rigidbody rotation to keep interesting physics behaviour
+	# but also have upright sprites >:)
+	pivot.rotation = -rotation
+	
 	if enemies_in_range.size() == 0:
 		target_pos = path_guide.global_position
-	
-	
 	
 	## CHECKING GUIDE/UNIT DISTANCE (not used anymore)
 	#

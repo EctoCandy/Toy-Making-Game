@@ -45,10 +45,12 @@ b = Vector2(1135.705, 214)
 script = ExtResource("1_a533s")
 
 [node name="EnemyPath" type="Path2D" parent="." unique_id=2096653348]
+y_sort_enabled = true
 position = Vector2(0, 105)
 curve = SubResource("Curve2D_8ok3p")
 
 [node name="PlayerUnitPath" type="Path2D" parent="." unique_id=1252086058]
+y_sort_enabled = true
 position = Vector2(0, 105)
 curve = SubResource("Curve2D_a60md")
 
