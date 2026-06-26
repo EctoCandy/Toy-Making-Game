@@ -5,17 +5,10 @@
 [ext_resource type="Texture2D" uid="uid://44w1wci3rfad" path="res://Assets/Art/pixil-frame-0_12.png" id="3_wunrn"]
 [ext_resource type="Texture2D" uid="uid://bljipspqn4m3q" path="res://Assets/Art/missle_head-export.png" id="4_fsatl"]
 [ext_resource type="Script" uid="uid://ggolqtocxmxi" path="res://Scripts/Minigames/MinigameHost.gd" id="5_sg3f8"]
+[ext_resource type="PackedScene" uid="uid://d03jnho2hl6w5" path="res://Scenes/wind_up_key.tscn" id="5_ubdpx"]
 [ext_resource type="PackedScene" uid="uid://cj1uvjijlicxg" path="res://Scenes/Minigames/precision_click_minigame.tscn" id="6_u2lpb"]
 [ext_resource type="PackedScene" uid="uid://46ien1865vi1" path="res://Scenes/Minigames/rapid_click_minigame.tscn" id="7_8rvw4"]
 [ext_resource type="PackedScene" uid="uid://7q7ejkuf8bt1" path="res://Scenes/Minigames/connect_points_minigame.tscn" id="8_crh31"]
-[ext_resource type="Texture2D" uid="uid://7v74f11l2y18" path="res://Assets/Art/WindUpKeyTopView.png" id="9_ubdpx"]
-[ext_resource type="Script" uid="uid://dqnw7mf0uoarc" path="res://Scripts/HandCrank/wind_up_key.gd" id="9_uyipn"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_ubdpx"]
-radius = 40.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_uyipn"]
-radius = 40.0
 
 [node name="RobotBuilder" type="Node2D" unique_id=1119867491]
 script = ExtResource("1_fsatl")
@@ -40,6 +33,9 @@ modulate = Color(0.6763604, 0.37868297, 0.039877195, 1)
 position = Vector2(110, 500)
 texture = ExtResource("3_wunrn")
 
+[node name="WindUpKey" parent="." unique_id=1614891329 instance=ExtResource("5_ubdpx")]
+position = Vector2(501, 393)
+
 [node name="MinigameHost" type="Control" parent="." unique_id=2091668107]
 layout_mode = 3
 anchors_preset = 0
@@ -47,28 +43,6 @@ offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("5_sg3f8")
 minigame_scenes = Array[PackedScene]([ExtResource("6_u2lpb"), ExtResource("7_8rvw4"), ExtResource("8_crh31")])
-
-[node name="WindUpKey" type="Node2D" parent="." unique_id=2138987589]
-visible = false
-z_index = 4096
-position = Vector2(470, 370)
-script = ExtResource("9_uyipn")
-
-[node name="Sprite2D" type="Sprite2D" parent="WindUpKey" unique_id=1232236130]
-rotation = 1.5707964
-texture = ExtResource("9_ubdpx")
-
-[node name="ClickableArea1" type="Area2D" parent="WindUpKey" unique_id=87253787]
-position = Vector2(0, -55)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WindUpKey/ClickableArea1" unique_id=1321066586]
-shape = SubResource("CircleShape2D_ubdpx")
-
-[node name="ClickableArea2" type="Area2D" parent="WindUpKey" unique_id=1814054248]
-position = Vector2(0, 55)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WindUpKey/ClickableArea2" unique_id=693973216]
-shape = SubResource("CircleShape2D_uyipn")
 
 [node name="WindProgressBar" type="ProgressBar" parent="." unique_id=946032902]
 z_index = 4096

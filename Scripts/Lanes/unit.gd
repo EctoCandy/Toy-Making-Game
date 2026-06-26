@@ -50,6 +50,7 @@ func _process(_delta: float) -> void:
 	# Reversing rigidbody rotation to keep interesting physics behaviour
 	# but also have upright sprites >:)
 	pivot.rotation = -rotation
+	print(pivot.rotation)
 	
 	if enemies_in_range.size() == 0:
 		target_pos = path_guide.global_position

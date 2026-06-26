@@ -1,5 +1,4 @@
 extends Control
-
 class_name BaseMinigame
 
 signal minigame_completed(success: bool)

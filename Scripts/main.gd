@@ -189,35 +189,35 @@ func _get_or_create_progress_bar(parent: Control, node_name: String) -> Progress
 # Positions the builder, minigames, HUD, and scaled lane defense area.
 func _apply_screen_layout() -> void:
 	var screen_size := get_viewport_rect().size
-
-	left_width = screen_size.x * left_screen_percent
-	right_width = screen_size.x - left_width
-	hud_height = screen_size.y * hud_height_percent
-
-	var margin := 12.0
-
-	robot_builder.position = Vector2.ZERO
-	robot_builder.visible = true
-	robot_builder.z_index = 1
-
-	if minigame_host != null:
-		minigame_host.position = Vector2.ZERO
-		minigame_host.size = Vector2(left_width, screen_size.y)
-		minigame_host.set("host_size", Vector2(left_width, screen_size.y))
-
-	var lane_available_size := Vector2(
-		right_width - margin * 2.0,
-		screen_size.y - hud_height - margin * 2.0
-	)
-
-	var lane_scale_x := lane_available_size.x / lane_prototype_size.x
-	var lane_scale_y := lane_available_size.y / lane_prototype_size.y
-	var final_lane_scale = min(lane_scale_x, lane_scale_y) * lane_extra_shrink
-
-	lane_defense_area.position = Vector2(left_width + margin, hud_height + margin)
-	lane_defense_area.scale = Vector2(final_lane_scale, final_lane_scale)
-	lane_defense_area.visible = true
-	lane_defense_area.z_index = 1
+#
+	#left_width = screen_size.x * left_screen_percent
+	#right_width = screen_size.x - left_width
+	#hud_height = screen_size.y * hud_height_percent
+#
+	#var margin := 12.0
+#
+	#robot_builder.position = Vector2.ZERO
+	#robot_builder.visible = true
+	#robot_builder.z_index = 1
+#
+	#if minigame_host != null:
+		#minigame_host.position = Vector2.ZERO
+		#minigame_host.size = Vector2(left_width, screen_size.y)
+		#minigame_host.set("host_size", Vector2(left_width, screen_size.y))
+#
+	#var lane_available_size := Vector2(
+		#right_width - margin * 2.0,
+		#screen_size.y - hud_height - margin * 2.0
+	#)
+#
+	#var lane_scale_x := lane_available_size.x / lane_prototype_size.x
+	#var lane_scale_y := lane_available_size.y / lane_prototype_size.y
+	#var final_lane_scale = min(lane_scale_x, lane_scale_y) * lane_extra_shrink
+#
+	#lane_defense_area.position = Vector2(left_width + margin, hud_height + margin)
+	#lane_defense_area.scale = Vector2(final_lane_scale, final_lane_scale)
+	#lane_defense_area.visible = true
+	#lane_defense_area.z_index = 1
 
 	screen_ui.layer = 10
 

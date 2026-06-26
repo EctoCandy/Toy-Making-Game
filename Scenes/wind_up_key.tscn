@@ -4,7 +4,10 @@
 [ext_resource type="Texture2D" uid="uid://7v74f11l2y18" path="res://Assets/Art/WindUpKeyTopView.png" id="1_l8quu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sc487"]
-size = Vector2(107, 54)
+size = Vector2(115.5, 53)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_egcyy"]
+size = Vector2(115.5, 54)
 
 [node name="WindUpKey" type="Node2D" unique_id=1614891329]
 script = ExtResource("1_egcyy")
@@ -15,11 +18,11 @@ texture = ExtResource("1_l8quu")
 [node name="ClickableArea1" type="Area2D" parent="." unique_id=900297690]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ClickableArea1" unique_id=627102442]
-position = Vector2(77, 0)
+position = Vector2(72.75, -0.5)
 shape = SubResource("RectangleShape2D_sc487")
 
 [node name="ClickableArea2" type="Area2D" parent="." unique_id=485629990]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ClickableArea2" unique_id=2113837576]
-position = Vector2(-77, 0)
-shape = SubResource("RectangleShape2D_sc487")
+position = Vector2(-72.75, 0)
+shape = SubResource("RectangleShape2D_egcyy")

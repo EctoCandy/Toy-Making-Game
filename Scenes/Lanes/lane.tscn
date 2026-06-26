@@ -44,6 +44,12 @@ b = Vector2(1135.705, 214)
 [node name="Lane" type="Node2D" unique_id=757423102]
 script = ExtResource("1_a533s")
 
+[node name="PlayerUnitSpawn" type="Node2D" parent="." unique_id=275782582]
+position = Vector2(-76.18, 103.89)
+
+[node name="EnemyUnitSpawn" type="Node2D" parent="." unique_id=1839210217]
+position = Vector2(1289.1, 107.6)
+
 [node name="EnemyPath" type="Path2D" parent="." unique_id=2096653348]
 y_sort_enabled = true
 position = Vector2(0, 105)
