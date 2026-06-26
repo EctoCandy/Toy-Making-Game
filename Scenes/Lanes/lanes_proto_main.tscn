@@ -25,6 +25,7 @@ height = 27
 metadata/_snap_count = 2
 
 [node name="Main" type="Node2D" unique_id=1786035646]
+position = Vector2(2, 2)
 script = ExtResource("1_ndud4")
 
 [node name="Lane1" parent="." unique_id=1811325806 instance=ExtResource("2_ndud4")]
