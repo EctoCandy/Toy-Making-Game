@@ -6,18 +6,18 @@ class_name ConnectPointsMinigame
 @export var drop_distance := 55.0
 @export var line_thickness := 6.0
 
-var panel: Panel
+var panel: TextureRect
 var title_label: Label
 var feedback_label: Label
 var cancel_button: Button
 
-var left_buttons: Array[Button] = []
-var right_buttons: Array[Button] = []
+var left_buttons: Array[TextureButton] = []
+var right_buttons: Array[TextureButton] = []
 
 var point_ids := ["A", "B", "C"]
 
 var selected_point_id := ""
-var selected_point_button: Button = null
+var selected_point_button: TextureButton = null
 var current_drag_line: Line2D = null
 
 var completed_connections := {}
@@ -33,34 +33,35 @@ func _ready() -> void:
 
 # Creates the minigame window, point buttons, target buttons, and cancel button.
 func _build_ui() -> void:
-	panel = Panel.new()
+	panel = TextureRect.new()
 	panel.name = "Panel"
+	panel.texture = load("res://Assets/Art/MinigameBG.png")
 	panel.position = Vector2(19, 136)
-	panel.size = Vector2(430, 370)
+	panel.size = Vector2(430, 430)
 	add_child(panel)
 
-	title_label = Label.new()
-	title_label.name = "TitleLabel"
-	title_label.text = "Connect Matching Points"
-	title_label.position = Vector2(40, 20)
-	title_label.size = Vector2(330, 40)
-	panel.add_child(title_label)
+	#title_label = Label.new()
+	#title_label.name = "TitleLabel"
+	#title_label.text = "Connect Matching Points"
+	#title_label.position = Vector2(40, 20)
+	#title_label.size = Vector2(330, 40)
+	#panel.add_child(title_label)
 
-	feedback_label = Label.new()
-	feedback_label.name = "FeedbackLabel"
-	feedback_label.text = "Drag each point to its matching target."
-	feedback_label.position = Vector2(40, 295)
-	feedback_label.size = Vector2(240, 60)
-	feedback_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	panel.add_child(feedback_label)
+	#feedback_label = Label.new()
+	#feedback_label.name = "FeedbackLabel"
+	#feedback_label.text = "Drag each point to its matching target."
+	#feedback_label.position = Vector2(40, 295)
+	#feedback_label.size = Vector2(240, 60)
+	#feedback_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	#panel.add_child(feedback_label)
 
-	var left_point_1 := _make_button("LeftPoint1", Vector2(40, 85))
-	var left_point_2 := _make_button("LeftPoint2", Vector2(40, 155))
-	var left_point_3 := _make_button("LeftPoint3", Vector2(40, 225))
+	var left_point_1 := _make_button("LeftPoint1", Vector2(40, 107))
+	var left_point_2 := _make_button("LeftPoint2", Vector2(40, 214))
+	var left_point_3 := _make_button("LeftPoint3", Vector2(40, 321))
 
-	var right_target_1 := _make_button("RightTarget1", Vector2(265, 85))
-	var right_target_2 := _make_button("RightTarget2", Vector2(235, 155))
-	var right_target_3 := _make_button("RightTarget3", Vector2(280, 225))
+	var right_target_1 := _make_button("RightTarget1", Vector2(326, 107))
+	var right_target_2 := _make_button("RightTarget2", Vector2(326, 214)) # was 235
+	var right_target_3 := _make_button("RightTarget3", Vector2(326, 321)) # was 280
 
 	left_buttons = [
 		left_point_1,
@@ -77,18 +78,33 @@ func _build_ui() -> void:
 	for button in left_buttons:
 		button.button_down.connect(_on_left_point_button_down.bind(button))
 
-	cancel_button = _make_button("CancelButton", Vector2(315, 315))
-	cancel_button.size = Vector2(90, 35)
-	cancel_button.text = "Cancel"
-	cancel_button.pressed.connect(func(): end_minigame(false))
+	#cancel_button = _make_button("CancelButton", Vector2(315, 315))
+	#cancel_button.size = Vector2(90, 35)
+	#cancel_button.text = "Cancel"
+	#cancel_button.pressed.connect(func(): end_minigame(false))
 
 
-func _make_button(button_name: String, button_position: Vector2) -> Button:
-	var button := Button.new()
+func _make_button(button_name: String, button_position: Vector2) -> TextureButton:
+	var button := TextureButton.new()
 	button.name = button_name
+	# pick button sprite based on name (this code sucks)
+	if button_name == "LeftPoint1":
+		button.texture_normal = load("res://Assets/Art/RedWireL.png")
+	elif button_name == "LeftPoint2":
+		button.texture_normal = load("res://Assets/Art/GreenWireL.png")
+	elif button_name == "LeftPoint3":
+		button.texture_normal = load("res://Assets/Art/BlueWireL.png")
+	elif button_name == "RightTarget1":
+		button.texture_normal = load("res://Assets/Art/RedWireR.png")
+	elif button_name == "RightTarget2":
+		button.texture_normal = load("res://Assets/Art/BueWireR.png")
+	elif button_name == "RightTarget3":
+		button.texture_normal = load("res://Assets/Art/GreenWireR.png")
+	else:
+		print("Error: Unrecognized button name")
 	button.position = button_position
-	button.size = Vector2(130, 40)
-	button.text = button_name
+	button.size = Vector2(15, 8)
+	# button.text = button_name
 	panel.add_child(button)
 	return button
 
@@ -105,27 +121,35 @@ func start_minigame(new_context: Dictionary = {}) -> void:
 	permanent_lines.clear()
 	mistakes = 0
 
-	title_label.text = "Connect Matching Points"
-	feedback_label.text = "Drag each point to its matching target."
+	#title_label.text = "Connect Matching Points"
+	#feedback_label.text = "Drag each point to its matching target."
 
 	var right_order := _get_non_straight_target_order()
 
 	for i in range(left_buttons.size()):
 		var point_id: String = point_ids[i]
 		var button := left_buttons[i]
-
 		button.disabled = false
 		button.show()
-		button.text = "Point " + point_id
+		#button.text = "Point " + point_id
 		button.set_meta("point_id", point_id)
 
 	for i in range(right_buttons.size()):
 		var point_id: String = right_order[i]
 		var button := right_buttons[i]
-
+		if point_id == "A":
+			button.texture_normal = load("res://Assets/Art/RedWireR.png")
+		elif point_id == "B":
+			button.texture_normal = load("res://Assets/Art/GreenWireR.png")
+		elif point_id == "C":
+			button.texture_normal = load("res://Assets/Art/BlueWireR.png")
+		else:
+			print("Error: Unrecognized point_id")
 		button.disabled = false
 		button.show()
-		button.text = "Target " + point_id
+		# set button sprite based on ID (this code sucks)
+		
+		#button.text = "Target " + point_id
 		button.set_meta("point_id", point_id)
 
 
@@ -146,7 +170,7 @@ func _input(event: InputEvent) -> void:
 
 
 # Starts dragging a point when the player clicks one on the left.
-func _on_left_point_button_down(button: Button) -> void:
+func _on_left_point_button_down(button: TextureButton) -> void:
 	if button.disabled:
 		return
 
@@ -158,7 +182,7 @@ func _on_left_point_button_down(button: Button) -> void:
 	selected_point_id = point_id
 	selected_point_button = button
 
-	feedback_label.text = "Dragging Point " + selected_point_id
+	#feedback_label.text = "Dragging Point " + selected_point_id
 
 	_create_drag_line()
 
@@ -196,7 +220,7 @@ func _finish_drag(mouse_pos: Vector2) -> void:
 	var target := _get_target_at_position(mouse_pos)
 
 	if target == null:
-		feedback_label.text = "Dropped too far from a target. Try again."
+		#feedback_label.text = "Dropped too far from a target. Try again."
 		_clear_current_drag()
 		return
 
@@ -205,15 +229,15 @@ func _finish_drag(mouse_pos: Vector2) -> void:
 	if selected_point_id == target_point_id:
 		_complete_connection(selected_point_id, selected_point_button, target)
 	else:
-		mistakes += 1
-		feedback_label.text = "Wrong target. Mistakes: " + str(mistakes) + "/" + str(max_mistakes)
+		#mistakes += 1
+		#feedback_label.text = "Wrong target. Mistakes: " + str(mistakes) + "/" + str(max_mistakes)
 		_clear_current_drag()
 
 		if mistakes >= max_mistakes:
 			end_minigame(false)
 
 
-func _get_target_at_position(mouse_pos: Vector2) -> Button:
+func _get_target_at_position(mouse_pos: Vector2) -> TextureButton:
 	for target in right_buttons:
 		if target.disabled:
 			continue
@@ -230,13 +254,13 @@ func _get_target_at_position(mouse_pos: Vector2) -> Button:
 
 
 # Locks in a correct connection and wins once all points are connected.
-func _complete_connection(point_id: String, left_button: Button, right_button: Button) -> void:
+func _complete_connection(point_id: String, left_button: TextureButton, right_button: TextureButton) -> void:
 	completed_connections[point_id] = true
 
 	left_button.disabled = true
 	right_button.disabled = true
 
-	feedback_label.text = "Point " + point_id + " connected."
+	#feedback_label.text = "Point " + point_id + " connected."
 
 	if current_drag_line != null:
 		_set_line_points(
@@ -285,11 +309,11 @@ func _set_line_points(line: Line2D, start_global: Vector2, end_global: Vector2) 
 	]
 
 
-func _get_left_anchor(button: Button) -> Vector2:
+func _get_left_anchor(button: TextureButton) -> Vector2:
 	return button.global_position + Vector2(button.size.x, button.size.y / 2.0)
 
 
-func _get_right_anchor(button: Button) -> Vector2:
+func _get_right_anchor(button: TextureButton) -> Vector2:
 	return button.global_position + Vector2(0, button.size.y / 2.0)
 
 
@@ -316,7 +340,7 @@ func _get_point_color(point_id: String) -> Color:
 		"A":
 			return Color(1.0, 0.1, 0.1)
 		"B":
-			return Color(0.1, 0.9, 0.2)
+			return Color(0.1, 0.9, 0.2, 1.0)
 		"C":
 			return Color(0.2, 0.45, 1.0)
 		_:

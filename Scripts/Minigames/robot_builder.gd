@@ -10,7 +10,7 @@ signal robot_completed(unit_data: Dictionary)
 
 @export var required_wind_amount: float = TAU * 3.0
 @export var wind_key_position: Vector2 = Vector2(236, 324)
-@export var wind_progress_position: Vector2 = Vector2(116, 428)
+@export var wind_progress_position: Vector2 = Vector2(116, 444)
 @export var wind_progress_size: Vector2 = Vector2(240, 28)
 
 @export var auto_reset_after_success: bool = true
@@ -23,6 +23,7 @@ signal robot_completed(unit_data: Dictionary)
 
 var wind_up_key: WindUpKey = null
 var wind_progress_bar: ProgressBar = null
+var wind_background: Sprite2D = null
 
 var head_parts: Array[Sprite2D] = []
 var starting_positions: Dictionary = {}
@@ -96,9 +97,11 @@ func _ready() -> void:
 func _setup_wind_up_nodes() -> void:
 	var found_key: Node = get_node_or_null("WindUpKey")
 	var found_bar: Node = get_node_or_null("WindProgressBar")
+	var found_bg: Node = get_node_or_null("WindUpKeyBG")
 
 	wind_up_key = found_key as WindUpKey
 	wind_progress_bar = found_bar as ProgressBar
+	wind_background = found_bg as Sprite2D
 
 	if wind_up_key != null:
 		var crank_callable: Callable = Callable(self, "_on_wind_up_key_cranked")
@@ -274,6 +277,8 @@ func _start_wind_up_step() -> void:
 		push_warning("Cannot start wind-up because WindUpKey is missing.")
 		return
 
+	wind_background.show()
+
 	wind_up_key.position = wind_key_position
 	wind_up_key.rotation = 0.0
 	wind_up_key.z_index = 100
@@ -321,6 +326,9 @@ func _finish_wind_up_step() -> void:
 
 	if wind_progress_bar != null:
 		wind_progress_bar.hide()
+	
+	if wind_background != null:
+		wind_background.hide()
 
 	_complete_robot_from_head(pending_head)
 
@@ -370,6 +378,9 @@ func reset_builder() -> void:
 	if wind_progress_bar != null:
 		wind_progress_bar.value = 0
 		wind_progress_bar.hide()
+	
+	if wind_background != null:
+		wind_background.hide()
 
 	head_choices.show()
 	body_part.show()

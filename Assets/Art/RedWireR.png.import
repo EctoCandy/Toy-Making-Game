@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dkfqroa8b5yws"
-path="res://.godot/imported/WindUpKeyBackground.png-2fc83e70f51e01d9d10b6fcc5421316f.ctex"
+uid="uid://ww7eg36myegd"
+path="res://.godot/imported/RedWireR.png-c9668c3f67688e9a659b9612a4e636e0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Art/WindUpKeyBackground.png"
-dest_files=["res://.godot/imported/WindUpKeyBackground.png-2fc83e70f51e01d9d10b6fcc5421316f.ctex"]
+source_file="res://Assets/Art/RedWireR.png"
+dest_files=["res://.godot/imported/RedWireR.png-c9668c3f67688e9a659b9612a4e636e0.ctex"]
 
 [params]
 
