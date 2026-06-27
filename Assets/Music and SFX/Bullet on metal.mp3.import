@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://brtspa1ua11xy"
+path="res://.godot/imported/Bullet on metal.mp3-3e23d30a2a6b06c7ca00bdee48e3ef49.mp3str"
+
+[deps]
+
+source_file="res://Assets/Music and SFX/Bullet on metal.mp3"
+dest_files=["res://.godot/imported/Bullet on metal.mp3-3e23d30a2a6b06c7ca00bdee48e3ef49.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

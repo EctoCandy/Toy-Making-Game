@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://db7reodij3jrb"
+path="res://.godot/imported/Blood splat.mp3-f73e8f75e4faf4ced11122b24a82549f.mp3str"
+
+[deps]
+
+source_file="res://Assets/Music and SFX/Blood splat.mp3"
+dest_files=["res://.godot/imported/Blood splat.mp3-f73e8f75e4faf4ced11122b24a82549f.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

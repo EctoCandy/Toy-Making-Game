@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://c487py1l576k3"
+path="res://.godot/imported/the time signature is 4_4 metal in c#m.mp3-1bec4370702299614ee1cd25466f8b66.mp3str"
+
+[deps]
+
+source_file="res://Assets/Music and SFX/the time signature is 4_4 metal in c#m.mp3"
+dest_files=["res://.godot/imported/the time signature is 4_4 metal in c#m.mp3-1bec4370702299614ee1cd25466f8b66.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
