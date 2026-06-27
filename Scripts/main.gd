@@ -71,9 +71,10 @@ var enemy_data := {
 		"health": 60,
 		"damage": 20,
 		"attack_speed": 0.1,
-		"move_speed": 5,
-		"guide_move_speed": 0.01,
-		"behavior": "Weak little bastard :(",
+		"move_speed": 0.3,
+		"guide_move_speed": 0.025,
+		"encounter_mask": 1,
+		"behavior": "Weak little bastards >:(",
 	}
 
 func _ready() -> void:

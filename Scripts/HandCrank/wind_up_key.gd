@@ -5,7 +5,7 @@ extends Node2D
 
 signal cranked(distance: float)
 
-@export var max_rotation_speed_degrees: float = 1080.0
+@export var max_rotation_speed_degrees: float = 1150.0
 
 var following_mouse: bool = false
 var max_rotation_speed_rad: float = 0.0
@@ -98,7 +98,6 @@ func _physics_process(delta: float) -> void:
 		return
 
 	var max_frame_rotation: float = max_rotation_speed_rad * delta
-
 	var frame_rotation: float = clampf(
 		get_angle_to(get_global_mouse_position()),
 		-max_frame_rotation,

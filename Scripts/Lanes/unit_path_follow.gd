@@ -7,9 +7,14 @@ extends PathFollow2D
 var is_stopped := false
 var has_reached_frontline := false
 var unit : RigidBody2D
+var encounter_mask : int
 
 @onready var guide: Node2D = $Guide
 @onready var frontline_area: Area2D = $FrontlineArea
+
+func _ready() -> void:
+	frontline_area.collision_mask = encounter_mask
+	print(encounter_mask)
 
 
 func _process(delta: float) -> void:

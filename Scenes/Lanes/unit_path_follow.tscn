@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://ct0ieme7ybwxk" path="res://Scripts/Lanes/unit_path_follow.gd" id="1_ox7ku"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ln6rh"]
-size = Vector2(159, 162)
+size = Vector2(129, 162)
 
 [node name="UnitPathFollow" type="PathFollow2D" unique_id=922385664]
 loop = false
@@ -21,5 +21,5 @@ collision_layer = 0
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FrontlineArea" unique_id=1773920955]
-position = Vector2(-58.5, 0)
+position = Vector2(-43.5, 0)
 shape = SubResource("RectangleShape2D_ln6rh")

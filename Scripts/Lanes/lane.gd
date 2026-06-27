@@ -60,6 +60,9 @@ func _apply_unit_data_to_unit(unit: Node, path_follow: Node, unit_data: Dictiona
 	if unit_data.has("guide_move_speed") and _has_property(path_follow, "move_speed"):
 		path_follow.set("move_speed", unit_data["guide_move_speed"])
 	
+	if unit_data.has("encounter_mask") and _has_property(path_follow, "encounter_mask"):
+		path_follow.set("encounter_mask", unit_data["encounter_mask"])
+	
 	
 	## HEAD SPRITE
 	if unit_data["unit_type"] == "unit_1":
@@ -116,4 +119,5 @@ func _on_enemy_end_lane_body_entered(body: Node2D) -> void:
 func _on_player_end_lane_body_entered(body: Node2D) -> void:
 	print("player ended line")
 	var has_been_defeated = false
+	self.owner.add_score(body.health / 2)
 	body.death(has_been_defeated)

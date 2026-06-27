@@ -28,7 +28,6 @@ metadata/_snap_count = 2
 
 [node name="Main" type="Node2D" unique_id=1786035646]
 script = ExtResource("1_ndud4")
-max_health = 100.0
 
 [node name="Background" type="Sprite2D" parent="." unique_id=6842814]
 position = Vector2(573, 324)
@@ -98,5 +97,27 @@ offset_left = 585.0
 offset_top = 500.0
 offset_right = 765.0
 offset_bottom = 545.0
+
+[node name="Panel" type="Panel" parent="ScreenUI/GameOverScreen" unique_id=1608731307]
+layout_mode = 0
+offset_left = 741.0
+offset_top = 145.0
+offset_right = 1140.0
+offset_bottom = 317.0
+scale = Vector2(0.70575523, 0.70575523)
+
+[node name="Label" type="Label" parent="ScreenUI/GameOverScreen" unique_id=1106314670]
+custom_minimum_size = Vector2(250, 200)
+custom_maximum_size = Vector2(400, 150)
+layout_mode = 0
+offset_left = 739.0
+offset_top = 154.0
+offset_right = 1139.0
+offset_bottom = 304.0
+scale = Vector2(0.70575523, 0.70575523)
+theme_override_font_sizes/font_size = 32
+text = "Killing enemies and reaching the end of the lane increases score"
+horizontal_alignment = 1
+autowrap_mode = 2
 
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]

@@ -50,6 +50,7 @@ var head_unit_database: Dictionary = {
 		"attack_speed": 0.05,
 		"move_speed": 1,
 		"guide_move_speed": 0.07,
+		"encounter_mask": 2,
 		"behavior": "speedy boi"
 	},
 	"Head2": {
@@ -60,6 +61,7 @@ var head_unit_database: Dictionary = {
 		"attack_speed": 0.5,
 		"move_speed": 0.4,
 		"guide_move_speed": 0.030,
+		"encounter_mask": 2,
 		"behavior": "balanced"
 	},
 	"Head3": {
@@ -70,6 +72,7 @@ var head_unit_database: Dictionary = {
 		"attack_speed": 2.5,
 		"move_speed": 0.2,
 		"guide_move_speed": 0.014,
+		"encounter_mask": 2,
 		"behavior": "tank"
 	}
 }
