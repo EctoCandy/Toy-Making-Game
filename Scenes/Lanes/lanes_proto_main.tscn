@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://bpr36f64xjl8o" path="res://Assets/Art/Background.png" id="2_oild2"]
 [ext_resource type="PackedScene" uid="uid://q0gq8mno4fm" path="res://Scenes/Minigames/RobotBuilder.tscn" id="3_oild2"]
 [ext_resource type="PackedScene" uid="uid://4t183y78j406" path="res://Scenes/Lanes/health_bar.tscn" id="4_po6rj"]
+[ext_resource type="Texture2D" uid="uid://t0wlqjt811q1" path="res://Assets/Art/IRS_Game_over.png" id="6_262eb"]
 
 [sub_resource type="Gradient" id="Gradient_0b2sg"]
 colors = PackedColorArray(0.4608078, 0.16061279, 0.068631016, 1, 0.16709885, 0.081441276, 0.05518698, 1)
@@ -75,5 +76,27 @@ offset_bottom = 107.0
 texture_under = SubResource("GradientTexture2D_oild2")
 texture_progress = SubResource("GradientTexture2D_262eb")
 target = NodePath("../..")
+
+[node name="GameOverScreen" type="Control" parent="ScreenUI" unique_id=153603077]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="GameOverArt" type="TextureRect" parent="ScreenUI/GameOverScreen" unique_id=1320062546]
+layout_mode = 0
+offset_left = 360.0
+offset_top = 180.0
+offset_right = 920.0
+offset_bottom = 540.0
+mouse_filter = 2
+texture = ExtResource("6_262eb")
+
+[node name="RestartButton" type="Button" parent="ScreenUI/GameOverScreen" unique_id=1559973954]
+layout_mode = 0
+offset_left = 585.0
+offset_top = 500.0
+offset_right = 765.0
+offset_bottom = 545.0
 
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]

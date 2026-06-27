@@ -3,13 +3,15 @@ extends Node2D
 signal health_changed
 signal lane_selected
 
-@export var player_unit_scene: PackedScene = preload("uid://dt3wdlwjtddbi")
-@export var enemy_unit_scene: PackedScene = preload("uid://daib08ro8i7su")
+@export var player_unit_scene: PackedScene = preload("res://Scenes/Lanes/basic_player_unit.tscn")
+@export var enemy_unit_scene: PackedScene = preload("res://Scenes/Lanes/basic_enemy.tscn")
 @export var robot_builder_scene: PackedScene = preload("res://Scenes/Minigames/RobotBuilder.tscn")
 
 @export var max_health := 1000.0
 
 const RAYCAST_COLLISION_MASK = 4
+
+const GAME_OVER_TEXTURE_PATH: String = "res://Assets/Art/IRS_Game_over.png"
 
 @export var left_screen_percent := 0.5
 @export var hud_height_percent := 0.17
@@ -58,6 +60,10 @@ var hud_height := 120.0
 
 var health : float
 
+var game_over_screen: Control = null
+var game_over_art: TextureRect = null
+var restart_button: Button = null
+var game_is_over: bool = false
 
 func _ready() -> void:
 	randomize()
@@ -65,6 +71,7 @@ func _ready() -> void:
 	_find_or_create_robot_builder()
 	_find_or_create_lane_defense_area()
 	_find_or_create_hud_nodes()
+	_find_or_create_game_over_screen()
 
 	lane_dict = {
 		1: lane_1,
@@ -253,6 +260,94 @@ func _layout_hud_nodes(hud_width: float, hud_height_value: float) -> void:
 		hud_background.size = Vector2(hud_width, hud_height_value)
 		hud_background.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
+# Finds the game over screen made in the editor, or creates a simple fallback.
+func _find_or_create_game_over_screen() -> void:
+	if screen_ui == null:
+		screen_ui = get_node_or_null("ScreenUI") as CanvasLayer
+
+	if screen_ui == null:
+		screen_ui = CanvasLayer.new()
+		screen_ui.name = "ScreenUI"
+		add_child(screen_ui)
+
+	screen_ui.layer = 100
+	screen_ui.process_mode = Node.PROCESS_MODE_ALWAYS
+
+	game_over_screen = screen_ui.get_node_or_null("GameOverScreen") as Control
+
+	if game_over_screen == null:
+		game_over_screen = Control.new()
+		game_over_screen.name = "GameOverScreen"
+		screen_ui.add_child(game_over_screen)
+
+	game_over_screen.set_anchors_preset(Control.PRESET_FULL_RECT)
+	game_over_screen.offset_left = 0
+	game_over_screen.offset_top = 0
+	game_over_screen.offset_right = 0
+	game_over_screen.offset_bottom = 0
+	game_over_screen.mouse_filter = Control.MOUSE_FILTER_STOP
+	game_over_screen.process_mode = Node.PROCESS_MODE_ALWAYS
+	game_over_screen.z_index = 4000
+	game_over_screen.hide()
+
+	game_over_art = game_over_screen.get_node_or_null("GameOverArt") as TextureRect
+
+	if game_over_art == null:
+		game_over_art = TextureRect.new()
+		game_over_art.name = "GameOverArt"
+		game_over_screen.add_child(game_over_art)
+
+	var loaded_texture: Texture2D = load(GAME_OVER_TEXTURE_PATH) as Texture2D
+
+	if loaded_texture == null:
+		push_warning("Game over texture could not load. Check this path: " + GAME_OVER_TEXTURE_PATH)
+	else:
+		game_over_art.texture = loaded_texture
+
+	game_over_art.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	game_over_art.stretch_mode = TextureRect.STRETCH_SCALE
+	game_over_art.z_index = 4001
+
+	restart_button = game_over_screen.get_node_or_null("RestartButton") as Button
+
+	if restart_button == null:
+		restart_button = Button.new()
+		restart_button.name = "RestartButton"
+		game_over_screen.add_child(restart_button)
+
+	restart_button.text = "Restart"
+	restart_button.process_mode = Node.PROCESS_MODE_ALWAYS
+	restart_button.mouse_filter = Control.MOUSE_FILTER_STOP
+	restart_button.z_index = 4002
+
+	var restart_callable: Callable = Callable(self, "_on_restart_button_pressed")
+
+	if not restart_button.pressed.is_connected(restart_callable):
+		restart_button.pressed.connect(restart_callable)
+
+	_layout_game_over_screen()
+
+func _layout_game_over_screen() -> void:
+	if game_over_screen == null:
+		return
+
+	var screen_size: Vector2 = get_viewport_rect().size
+
+	if game_over_art != null:
+		game_over_art.size = Vector2(560, 360)
+		game_over_art.position = Vector2(
+			(screen_size.x - game_over_art.size.x) / 2.0,
+			(screen_size.y - game_over_art.size.y) / 2.0
+		)
+
+	if restart_button != null:
+		restart_button.size = Vector2(180, 45)
+
+		# This places the button over the signature line area of the IRS paper.
+		restart_button.position = Vector2(
+			(screen_size.x / 2.0) - 10.0,
+			(screen_size.y / 2.0) + 140.0
+		)
 
 # Connects the robot builder and enemy timer.
 func _connect_signals() -> void:
@@ -483,9 +578,23 @@ func _player_take_damage(damage):
 		_game_over()
 
 
-func _game_over():
-	get_tree().reload_current_scene.call_deferred()
+func _game_over() -> void:
+	if game_is_over:
+		return
 
+	game_is_over = true
+
+	if spawn_timer != null:
+		spawn_timer.stop()
+
+	if game_over_screen != null:
+		game_over_screen.show()
+
+	get_tree().paused = true
+
+func _on_restart_button_pressed() -> void:
+	get_tree().paused = false
+	get_tree().reload_current_scene()
 
 # Ends the wave only after all enemies have spawned and all enemies are defeated.
 func _check_for_wave_complete() -> void:
