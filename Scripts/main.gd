@@ -412,6 +412,7 @@ func _on_robot_completed(unit_data: Dictionary) -> void:
 
 	if lane != null and lane.has_method("spawn_unit"):
 		lane.spawn_unit(player_unit_scene, "PlayerUnitPath", unit_data)
+		robot_builder.reset_builder()
 
 
 # Spawns enemies until the wave has spawned all enemies.

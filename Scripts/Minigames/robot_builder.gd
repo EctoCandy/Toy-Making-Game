@@ -339,11 +339,11 @@ func _complete_robot_from_head(head: Sprite2D) -> void:
 	# This is the only place the robot should emit as completed.
 	robot_completed.emit(unit_data)
 
-	if auto_reset_after_success:
-		await get_tree().create_timer(success_reset_delay).timeout
-		reset_builder()
-	else:
-		builder_locked = false
+	#if auto_reset_after_success:
+		#await get_tree().create_timer(success_reset_delay).timeout
+		#reset_builder()
+	#else:
+		#builder_locked = false
 
 
 # Resets the builder so the player can build another robot.
