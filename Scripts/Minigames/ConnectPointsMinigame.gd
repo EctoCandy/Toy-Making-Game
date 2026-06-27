@@ -99,7 +99,7 @@ func _make_button(button_name: String, button_position: Vector2) -> TextureButto
 	elif button_name == "RightTarget1":
 		button.texture_normal = load("res://Assets/Art/RedWireR.png")
 	elif button_name == "RightTarget2":
-		button.texture_normal = load("res://Assets/Art/BueWireR.png")
+		button.texture_normal = load("res://Assets/Art/BlueWireR.png")
 	elif button_name == "RightTarget3":
 		button.texture_normal = load("res://Assets/Art/GreenWireR.png")
 	else:
