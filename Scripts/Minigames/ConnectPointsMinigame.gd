@@ -37,7 +37,7 @@ func _build_ui() -> void:
 	panel.name = "Panel"
 	panel.texture = load("res://Assets/Art/MinigameBG.png")
 	panel.position = Vector2(19, 136)
-	panel.size = Vector2(430, 370)
+	panel.size = Vector2(430, 430)
 	add_child(panel)
 
 	#title_label = Label.new()
@@ -55,13 +55,13 @@ func _build_ui() -> void:
 	#feedback_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	#panel.add_child(feedback_label)
 
-	var left_point_1 := _make_button("LeftPoint1", Vector2(40, 85))
-	var left_point_2 := _make_button("LeftPoint2", Vector2(40, 155))
-	var left_point_3 := _make_button("LeftPoint3", Vector2(40, 225))
+	var left_point_1 := _make_button("LeftPoint1", Vector2(40, 107))
+	var left_point_2 := _make_button("LeftPoint2", Vector2(40, 214))
+	var left_point_3 := _make_button("LeftPoint3", Vector2(40, 321))
 
-	var right_target_1 := _make_button("RightTarget1", Vector2(265, 85))
-	var right_target_2 := _make_button("RightTarget2", Vector2(235, 155))
-	var right_target_3 := _make_button("RightTarget3", Vector2(280, 225))
+	var right_target_1 := _make_button("RightTarget1", Vector2(326, 107))
+	var right_target_2 := _make_button("RightTarget2", Vector2(326, 214)) # was 235
+	var right_target_3 := _make_button("RightTarget3", Vector2(326, 321)) # was 280
 
 	left_buttons = [
 		left_point_1,
