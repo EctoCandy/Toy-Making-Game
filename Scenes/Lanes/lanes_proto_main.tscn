@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://47n0ywaijsjh" path="res://Scripts/main.gd" id="1_ndud4"]
 [ext_resource type="PackedScene" uid="uid://bdhnmds611gw8" path="res://Scenes/Lanes/lane.tscn" id="2_ndud4"]
+[ext_resource type="Texture2D" uid="uid://bpr36f64xjl8o" path="res://Assets/Art/Background.png" id="2_oild2"]
 [ext_resource type="PackedScene" uid="uid://q0gq8mno4fm" path="res://Scenes/Minigames/RobotBuilder.tscn" id="3_oild2"]
 [ext_resource type="PackedScene" uid="uid://4t183y78j406" path="res://Scenes/Lanes/health_bar.tscn" id="4_po6rj"]
 
@@ -26,6 +27,10 @@ metadata/_snap_count = 2
 
 [node name="Main" type="Node2D" unique_id=1786035646]
 script = ExtResource("1_ndud4")
+
+[node name="Background" type="Sprite2D" parent="." unique_id=6842814]
+position = Vector2(573, 324)
+texture = ExtResource("2_oild2")
 
 [node name="Lane1" parent="." unique_id=1811325806 instance=ExtResource("2_ndud4")]
 position = Vector2(527, 111)
