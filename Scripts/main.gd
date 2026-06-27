@@ -51,7 +51,7 @@ var enemies_spawned_this_wave := 0
 var enemies_defeated_this_wave := 0
 var enemies_alive_this_wave := 0
 
-var left_width := 640.0
+var left_width := 472.0
 var right_width := 640.0
 var hud_height := 120.0
 
