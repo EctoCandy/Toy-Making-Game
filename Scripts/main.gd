@@ -393,8 +393,8 @@ func _input(event: InputEvent) -> void:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			_try_select_lane_from_mouse()
 
-		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
-			_spawn_debug_player_unit()
+		#if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+			#_spawn_debug_player_unit()
 
 	if event is InputEventKey and event.pressed:
 		if event.keycode == KEY_1:
@@ -621,11 +621,11 @@ func _check_for_wave_complete() -> void:
 
 
 # Right-click debug spawn.
-func _spawn_debug_player_unit() -> void:
-	var lane = lane_dict[selected_lane]
-
-	if lane != null and lane.has_method("spawn_unit"):
-		lane.spawn_unit(player_unit_scene, "PlayerUnitPath", {})
+#func _spawn_debug_player_unit() -> void:
+	#var lane = lane_dict[selected_lane]
+#
+	#if lane != null and lane.has_method("spawn_unit"):
+		#lane.spawn_unit(player_unit_scene, "PlayerUnitPath", {})
 
 
 # Adds points to the score.
