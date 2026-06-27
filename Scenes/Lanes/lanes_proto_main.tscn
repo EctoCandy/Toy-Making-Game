@@ -29,6 +29,7 @@ metadata/_snap_count = 2
 [node name="Main" type="Node2D" unique_id=1786035646]
 position = Vector2(2, 2)
 script = ExtResource("1_ndud4")
+max_health = 100.0
 
 [node name="Background" type="Sprite2D" parent="." unique_id=6842814]
 position = Vector2(573, 324)

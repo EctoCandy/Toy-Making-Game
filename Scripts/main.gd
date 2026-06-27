@@ -2,6 +2,7 @@ extends Node2D
 
 signal health_changed
 signal lane_selected
+signal game_over
 
 @export var player_unit_scene: PackedScene = preload("res://Scenes/Lanes/basic_player_unit.tscn")
 @export var enemy_unit_scene: PackedScene = preload("res://Scenes/Lanes/basic_enemy.tscn")
@@ -571,7 +572,6 @@ func _on_enemy_death(_enemy: Node, has_been_defeated: bool) -> void:
 
 func _player_take_damage(damage):
 	health -= damage
-	print(health)
 	_update_hud()
 	
 	if health <= 0.0:
@@ -589,8 +589,10 @@ func _game_over() -> void:
 
 	if game_over_screen != null:
 		game_over_screen.show()
-
+		
+	game_over.emit()
 	get_tree().paused = true
+	
 
 func _on_restart_button_pressed() -> void:
 	get_tree().paused = false

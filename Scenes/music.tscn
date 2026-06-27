@@ -1,8 +1,0 @@
-[gd_scene format=3 uid="uid://ddjypu2x7rkhc"]
-
-[ext_resource type="AudioStream" uid="uid://c487py1l576k3" path="res://Assets/Music and SFX/the time signature is 4_4 metal in c#m.mp3" id="1_bcprs"]
-
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" unique_id=1632645918]
-stream = ExtResource("1_bcprs")
-autoplay = true
-bus = &"Music"

@@ -105,7 +105,6 @@ func death(has_been_defeated: bool):
 	died.emit(self, has_been_defeated)
 	
 	if has_been_defeated == false:
-		print("test")
 		player_damaged.emit(90)
 	
 	if path_follow != null and is_instance_valid(path_follow):
