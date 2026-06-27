@@ -6,6 +6,8 @@ class_name ConnectPointsMinigame
 @export var drop_distance := 55.0
 @export var line_thickness := 6.0
 
+var splash_text = "Wire!"
+
 var panel: TextureRect
 var title_label: Label
 var feedback_label: Label

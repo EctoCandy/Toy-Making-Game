@@ -3,6 +3,7 @@ extends Control
 class_name MinigameHost
 
 signal minigame_finished(success: bool)
+signal update_splash_text(text: String)
 
 @export var host_size := Vector2(640, 720)
 @export var minigame_scenes: Array[PackedScene] = []
@@ -67,6 +68,7 @@ func _start_minigame_scene(scene: PackedScene, context: Dictionary) -> void:
 
 	var instance := scene.instantiate()
 	current_minigame = instance as BaseMinigame
+	update_splash_text.emit(instance.splash_text)
 
 	if current_minigame == null:
 		push_warning("Selected scene does not extend BaseMinigame.")

@@ -5,6 +5,8 @@ class_name RapidClickMinigame
 @export var target_clicks := 18
 @export var time_limit := 4.0
 
+var splash_text = "Screw!"
+
 var panel: TextureRect
 var title_label: Label
 var feedback_label: Label

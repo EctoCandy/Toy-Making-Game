@@ -13,6 +13,8 @@ var timer_label: Label
 var point_button: TextureButton
 var cancel_button: Button
 
+var splash_text = "Hammer!"
+
 var points_hit := 0
 var time_left := 0.0
 

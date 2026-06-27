@@ -66,7 +66,7 @@ var head_unit_database: Dictionary = {
 
 
 func _ready() -> void:
-	label.text = "Choose a head, attach it to the body, then complete the minigame."
+	label.text = "Attach!"
 
 	body_part.centered = true
 	body_part.z_index = 1
@@ -89,8 +89,15 @@ func _ready() -> void:
 
 	if not minigame_host.minigame_finished.is_connected(minigame_finished_callable):
 		minigame_host.minigame_finished.connect(minigame_finished_callable)
+	
+	if not minigame_host.update_splash_text.is_connected(minigame_finished_callable):
+		minigame_host.update_splash_text.connect(_on_update_splash_text)
 
 	_setup_wind_up_nodes()
+
+
+func _on_update_splash_text(text: String):
+	label.text = text
 
 
 # Finds and prepares the wind-up key and progress bar.
@@ -172,7 +179,7 @@ func _start_drag() -> void:
 		dragging_head.z_index = 10
 
 		var unit_data: Dictionary = _get_stored_unit_data(dragging_head)
-		label.text = "Selected: " + str(unit_data.get("display_name", "Unknown Unit"))
+		# label.text = "Selected: " + str(unit_data.get("display_name", "Unknown Unit"))
 
 
 # Stops dragging and checks whether the head was attached to the body.
@@ -224,7 +231,7 @@ func _try_connect_head(head: Sprite2D) -> void:
 		builder_locked = true
 
 		var unit_data: Dictionary = _get_stored_unit_data(pending_head)
-		label.text = "Building: " + str(unit_data.get("display_name", "Unknown Unit"))
+		# label.text = "Building: " + str(unit_data.get("display_name", "Unknown Unit"))
 
 		head_choices.hide()
 		body_part.hide()
@@ -232,8 +239,8 @@ func _try_connect_head(head: Sprite2D) -> void:
 			"part_name": pending_head.name,
 			"unit_data": unit_data
 		})
-	else:
-		label.text = "That head is not lined up with the body yet."
+	#else:
+		#label.text = "That head is not lined up with the body yet."
 
 
 # Snaps the head into the correct position on top of the body.
@@ -270,7 +277,7 @@ func _start_wind_up_step() -> void:
 	builder_locked = true
 	wind_amount = 0.0
 
-	label.text = "Wind up the key to finish the robot."
+	label.text = "Spin!!!"
 
 	if wind_up_key == null:
 		label.text = "ERROR: WindUpKey missing."
@@ -308,7 +315,7 @@ func _on_wind_up_key_cranked(distance: float) -> void:
 	var safe_required_amount: float = max(required_wind_amount, 0.001)
 	var percent: int = int(round((wind_amount / safe_required_amount) * 100.0))
 
-	label.text = "Winding: " + str(percent) + "%"
+	# label.text = "Winding: " + str(percent) + "%"
 
 	if wind_amount >= required_wind_amount:
 		_finish_wind_up_step()
@@ -345,7 +352,8 @@ func _complete_robot_from_head(head: Sprite2D) -> void:
 	unit_data["wind_up_power"] = wind_amount
 	unit_data["is_wound_up"] = true
 
-	label.text = "Completed: " + str(unit_data.get("display_name", "Unknown Unit"))
+	label.text = "Place!"
+	# label.text = "Completed: " + str(unit_data.get("display_name", "Unknown Unit"))
 
 	# This is the only place the robot should emit as completed.
 	robot_completed.emit(unit_data)
@@ -384,7 +392,7 @@ func reset_builder() -> void:
 
 	head_choices.show()
 	body_part.show()
-	label.text = "Choose a head, attach it to the body, then complete the minigame."
+	label.text = "Attach!"
 
 
 # Sends a head back to its original choice position.

@@ -12,6 +12,9 @@
 [ext_resource type="PackedScene" uid="uid://46ien1865vi1" path="res://Scenes/Minigames/rapid_click_minigame.tscn" id="7_8rvw4"]
 [ext_resource type="PackedScene" uid="uid://7q7ejkuf8bt1" path="res://Scenes/Minigames/connect_points_minigame.tscn" id="8_crh31"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_577ia"]
+font_size = 64
+
 [node name="RobotBuilder" type="Node2D" unique_id=1119867491]
 z_index = 1
 script = ExtResource("1_fsatl")
@@ -72,5 +75,8 @@ offset_right = 372.0
 offset_bottom = 482.0
 
 [node name="Label" type="Label" parent="." unique_id=408574409]
-offset_right = 40.0
-offset_bottom = 23.0
+offset_right = 458.0
+offset_bottom = 117.0
+label_settings = SubResource("LabelSettings_577ia")
+horizontal_alignment = 1
+vertical_alignment = 1
