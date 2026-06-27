@@ -9,8 +9,8 @@ signal robot_completed(unit_data: Dictionary)
 @export var head_neck_socket_offset: Vector2 = Vector2(0, 48)
 
 @export var required_wind_amount: float = TAU * 3.0
-@export var wind_key_position: Vector2 = Vector2(470, 370)
-@export var wind_progress_position: Vector2 = Vector2(350, 560)
+@export var wind_key_position: Vector2 = Vector2(236, 324)
+@export var wind_progress_position: Vector2 = Vector2(116, 428)
 @export var wind_progress_size: Vector2 = Vector2(240, 28)
 
 @export var auto_reset_after_success: bool = true

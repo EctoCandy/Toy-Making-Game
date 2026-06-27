@@ -35,7 +35,7 @@ func _ready() -> void:
 func _build_ui() -> void:
 	panel = Panel.new()
 	panel.name = "Panel"
-	panel.position = Vector2(19, 150)
+	panel.position = Vector2(19, 136)
 	panel.size = Vector2(430, 370)
 	add_child(panel)
 

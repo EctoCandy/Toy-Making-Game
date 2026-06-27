@@ -48,7 +48,7 @@ position = Vector2(110, 500)
 texture = ExtResource("3_wunrn")
 
 [node name="WindUpKey" parent="." unique_id=1614891329 instance=ExtResource("5_ubdpx")]
-position = Vector2(501, 393)
+position = Vector2(236, 324)
 
 [node name="MinigameHost" type="Control" parent="." unique_id=2091668107]
 layout_mode = 3
@@ -60,10 +60,10 @@ minigame_scenes = Array[PackedScene]([ExtResource("6_u2lpb"), ExtResource("7_8rv
 
 [node name="WindProgressBar" type="ProgressBar" parent="." unique_id=946032902]
 z_index = 4096
-offset_left = 365.0
-offset_top = 497.0
-offset_right = 668.0
-offset_bottom = 529.0
+offset_left = 69.0
+offset_top = 450.0
+offset_right = 372.0
+offset_bottom = 482.0
 
 [node name="Label" type="Label" parent="." unique_id=408574409]
 offset_right = 40.0
