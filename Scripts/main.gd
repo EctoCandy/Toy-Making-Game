@@ -17,7 +17,6 @@ const GAME_OVER_TEXTURE_PATH: String = "res://Assets/Art/IRS_Game_over.png"
 @export var left_screen_percent := 0.5
 @export var hud_height_percent := 0.17
 
-@export var lane_prototype_size := Vector2(1280, 720)
 @export var lane_extra_shrink := 0.9
 
 @export var enemies_per_wave := 10

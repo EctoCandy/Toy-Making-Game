@@ -20,33 +20,25 @@ max_contacts_reported = 7
 script = ExtResource("1_lnkmd")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=489891610]
-position = Vector2(0, -10)
 shape = SubResource("CircleShape2D_my7ai")
 
 [node name="Pivot" type="Node2D" parent="." unique_id=80256902]
 
 [node name="HealthBar" parent="Pivot" unique_id=1347073494 node_paths=PackedStringArray("target") instance=ExtResource("2_fecjr")]
-offset_left = -18.0
-offset_top = -58.0
-offset_right = 17.0
-offset_bottom = -51.0
+offset_left = -19.0
+offset_top = -48.0
+offset_right = 16.0
+offset_bottom = -41.0
 target = NodePath("../..")
 metadata/_edit_use_anchors_ = true
 
-[node name="Polygon2D" type="Polygon2D" parent="Pivot" unique_id=907939166]
-visible = false
-self_modulate = Color(0.43134022, 0.43134025, 0.43134025, 1)
-color = Color(1, 1, 1, 0.531)
-polygon = PackedVector2Array(-13.262101, -9.818968, 9.536743e-07, -16.45002, 13.262109, -9.818968, 15.472455, 1.2327856, 11.051755, 12.284538, 9.536743e-07, 16.981533, -11.051751, 12.284538, -15.472451, 1.2327856)
-
 [node name="Sprites" type="Node2D" parent="Pivot" unique_id=177043882]
-position = Vector2(1, -24)
+position = Vector2(0, -14)
 
 [node name="Sprite2D" type="Sprite2D" parent="Pivot/Sprites" unique_id=1927119528]
 texture = ExtResource("3_f8kec")
 
 [node name="AttackRangeArea" type="Area2D" parent="." unique_id=660404949]
-position = Vector2(0, -10)
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRangeArea" unique_id=1828761778]

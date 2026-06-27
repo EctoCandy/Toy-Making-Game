@@ -76,7 +76,7 @@ var head_unit_database: Dictionary = {
 
 
 func _ready() -> void:
-	label.text = "Attach!"
+	label.text = "Attach Head!"
 
 	body_part.centered = true
 	body_part.z_index = 1

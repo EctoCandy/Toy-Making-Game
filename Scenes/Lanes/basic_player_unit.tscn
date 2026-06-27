@@ -108,13 +108,12 @@ max_contacts_reported = 7
 script = ExtResource("1_oovt2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=489891610]
-position = Vector2(0, -10)
 shape = SubResource("CircleShape2D_nyo6d")
 
 [node name="Pivot" type="Node2D" parent="." unique_id=1747119850]
 
 [node name="Sprites" type="Node2D" parent="Pivot" unique_id=1312190282]
-position = Vector2(0, -23)
+position = Vector2(0, -13.000001)
 scale = Vector2(0.8, 0.8)
 
 [node name="TreadSpriteR" type="Sprite2D" parent="Pivot/Sprites" unique_id=707859760]
@@ -145,9 +144,9 @@ texture = ExtResource("5_nyo6d")
 [node name="HealthBar" parent="Pivot" unique_id=1347073494 node_paths=PackedStringArray("target") instance=ExtResource("2_rgwky")]
 z_index = 0
 offset_left = -9.0
-offset_top = -31.0
+offset_top = -21.0
 offset_right = 13.0
-offset_bottom = -20.0
+offset_bottom = -10.0
 texture_under = SubResource("GradientTexture2D_nyo6d")
 texture_progress = SubResource("GradientTexture2D_24roy")
 target = NodePath("../..")
@@ -157,14 +156,8 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRangeArea" unique_id=488800084]
-position = Vector2(0, -10)
 shape = SubResource("CircleShape2D_24roy")
 debug_color = Color(0.9993295, 0, 0.13029152, 0.41960785)
-
-[node name="Polygon2D" type="Polygon2D" parent="." unique_id=907939166]
-visible = false
-color = Color(0.23810166, 0.26133683, 0.27383968, 1)
-polygon = PackedVector2Array(-13.262101, -9.818968, 9.536743e-07, -16.45002, 13.262109, -9.818968, 15.472455, 1.2327856, 11.051755, 12.284538, 9.536743e-07, 16.981533, -11.051751, 12.284538, -16, 1)
 
 [node name="AttackCooldown" type="Timer" parent="." unique_id=1212120893]
 wait_time = 8.965
