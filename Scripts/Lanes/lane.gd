@@ -17,6 +17,7 @@ var colors = [
 
 # Spawns a unit into this lane and optionally applies robot-builder stats to it.
 func spawn_unit(unit_type: PackedScene, path: String, unit_data: Dictionary = {}) -> Node2D:
+	
 	var path_node := find_child(path, true, false)
 	
 	if path_node == null:

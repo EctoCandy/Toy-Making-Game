@@ -50,19 +50,21 @@ var head_unit_database: Dictionary = {
 		"attack_speed": 0.05,
 		"move_speed": 1,
 		"guide_move_speed": 0.07,
+		"unit_spawns": 1,
 		"encounter_mask": 2,
 		"behavior": "speedy boi"
 	},
 	"Head2": {
 		"display_name": "Unit 2",
 		"unit_type": "unit_2",
-		"health": 350,
-		"damage": 30,
-		"attack_speed": 0.5,
+		"health": 110,
+		"damage": 25,
+		"attack_speed": 1.2,
 		"move_speed": 0.4,
 		"guide_move_speed": 0.030,
+		"unit_spawns": 4,
 		"encounter_mask": 2,
-		"behavior": "balanced"
+		"behavior": "swarm"
 	},
 	"Head3": {
 		"display_name": "Unit 3",
@@ -72,6 +74,7 @@ var head_unit_database: Dictionary = {
 		"attack_speed": 2.5,
 		"move_speed": 0.2,
 		"guide_move_speed": 0.014,
+		"unit_spawns": 1,
 		"encounter_mask": 2,
 		"behavior": "tank"
 	}
@@ -370,13 +373,9 @@ func _complete_robot_from_head(head: Sprite2D) -> void:
 	# label.text = "Completed: " + str(unit_data.get("display_name", "Unknown Unit"))
 
 	# This is the only place the robot should emit as completed.
-	robot_completed.emit(unit_data)
+	for i in unit_data["unit_spawns"]:
+		robot_completed.emit(unit_data)
 
-	#if auto_reset_after_success:
-		#await get_tree().create_timer(success_reset_delay).timeout
-		#reset_builder()
-	#else:
-		#builder_locked = false
 
 
 # Resets the builder so the player can build another robot.

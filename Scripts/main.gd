@@ -69,10 +69,11 @@ var enemy_data := {
 		"display_name": "Enemy",
 		"unit_type": "enemy",
 		"health": 60,
-		"damage": 20,
-		"attack_speed": 0.1,
+		"damage": 5,
+		"attack_speed": 0.2,
 		"move_speed": 0.3,
 		"guide_move_speed": 0.025,
+		"unit_spawns": 1,
 		"encounter_mask": 1,
 		"behavior": "Weak little bastards >:(",
 	}
