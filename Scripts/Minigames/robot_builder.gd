@@ -223,6 +223,8 @@ func _try_connect_head(head: Sprite2D) -> void:
 		var unit_data: Dictionary = _get_stored_unit_data(pending_head)
 		label.text = "Building: " + str(unit_data.get("display_name", "Unknown Unit"))
 
+		head_choices.hide()
+		body_part.hide()
 		minigame_host.start_random_minigame({
 			"part_name": pending_head.name,
 			"unit_data": unit_data
@@ -251,6 +253,7 @@ func _on_minigame_finished(success: bool) -> void:
 		_return_head_to_start(pending_head)
 		pending_head = null
 		builder_locked = false
+		reset_builder()
 		return
 
 	# IMPORTANT: do not complete the robot here.
@@ -368,6 +371,8 @@ func reset_builder() -> void:
 		wind_progress_bar.value = 0
 		wind_progress_bar.hide()
 
+	head_choices.show()
+	body_part.show()
 	label.text = "Choose a head, attach it to the body, then complete the minigame."
 
 
