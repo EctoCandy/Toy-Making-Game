@@ -52,6 +52,7 @@ var enemies_defeated_this_wave := 0
 var enemies_alive_this_wave := 0
 
 var left_width := 472.0
+var hud_left_width := 640.0
 var right_width := 640.0
 var hud_height := 120.0
 
@@ -213,7 +214,7 @@ func _apply_screen_layout() -> void:
 	
 	screen_ui.layer = 10
 	
-	right_hud.position = Vector2(left_width, 0)
+	right_hud.position = Vector2(hud_left_width, 0)
 	right_hud.size = Vector2(right_width, hud_height)
 	right_hud.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	
