@@ -1,13 +1,14 @@
 [gd_scene format=3 uid="uid://q0gq8mno4fm"]
 
 [ext_resource type="Script" uid="uid://cks0oq22ymusy" path="res://Scripts/Minigames/robot_builder.gd" id="1_fsatl"]
-[ext_resource type="Texture2D" uid="uid://03do3l0joji8" path="res://Assets/Art/pixil-frame-0_13.png" id="2_sg3f8"]
 [ext_resource type="Texture2D" uid="uid://oui1cimu4q7t" path="res://Assets/Art/WorkBench.png" id="2_uyipn"]
-[ext_resource type="Texture2D" uid="uid://44w1wci3rfad" path="res://Assets/Art/pixil-frame-0_12.png" id="3_wunrn"]
+[ext_resource type="Texture2D" uid="uid://ci8hyucjr6mx5" path="res://Assets/Art/RoboBody.png" id="3_577ia"]
 [ext_resource type="Texture2D" uid="uid://bljipspqn4m3q" path="res://Assets/Art/missle_head-export.png" id="4_fsatl"]
+[ext_resource type="Texture2D" uid="uid://c2jhfthnp0nuw" path="res://Assets/Art/BombHead.png" id="4_vg4bv"]
 [ext_resource type="Script" uid="uid://ggolqtocxmxi" path="res://Scripts/Minigames/MinigameHost.gd" id="5_sg3f8"]
 [ext_resource type="PackedScene" uid="uid://d03jnho2hl6w5" path="res://Scenes/wind_up_key.tscn" id="5_ubdpx"]
 [ext_resource type="PackedScene" uid="uid://cj1uvjijlicxg" path="res://Scenes/Minigames/precision_click_minigame.tscn" id="6_u2lpb"]
+[ext_resource type="Texture2D" uid="uid://cpvvyhm5pd78n" path="res://Assets/Art/RoboHead.png" id="6_y3ddr"]
 [ext_resource type="PackedScene" uid="uid://46ien1865vi1" path="res://Scenes/Minigames/rapid_click_minigame.tscn" id="7_8rvw4"]
 [ext_resource type="PackedScene" uid="uid://7q7ejkuf8bt1" path="res://Scenes/Minigames/connect_points_minigame.tscn" id="8_crh31"]
 
@@ -29,13 +30,13 @@ region_rect = Rect2(197.42883, 513.7417, 692.93286, 982.2178)
 
 [node name="BodyPart" type="Sprite2D" parent="." unique_id=975611992]
 position = Vector2(300, 370)
-texture = ExtResource("2_sg3f8")
+texture = ExtResource("3_577ia")
 
 [node name="HeadChoices" type="Node2D" parent="." unique_id=1208515392]
 
 [node name="Head1" type="Sprite2D" parent="HeadChoices" unique_id=438432783]
 position = Vector2(110, 180)
-texture = ExtResource("3_wunrn")
+texture = ExtResource("4_vg4bv")
 
 [node name="Head2" type="Sprite2D" parent="HeadChoices" unique_id=27555610]
 position = Vector2(115, 332.5)
@@ -43,9 +44,8 @@ scale = Vector2(0.893, 1)
 texture = ExtResource("4_fsatl")
 
 [node name="Head3" type="Sprite2D" parent="HeadChoices" unique_id=1138895115]
-modulate = Color(0.6763604, 0.37868297, 0.039877195, 1)
 position = Vector2(110, 500)
-texture = ExtResource("3_wunrn")
+texture = ExtResource("6_y3ddr")
 
 [node name="WindUpKey" parent="." unique_id=1614891329 instance=ExtResource("5_ubdpx")]
 position = Vector2(236, 324)
