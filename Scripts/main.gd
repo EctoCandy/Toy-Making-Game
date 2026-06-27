@@ -1,6 +1,7 @@
 extends Node2D
 
 signal health_changed
+signal lane_selected
 
 @export var player_unit_scene: PackedScene = preload("uid://dt3wdlwjtddbi")
 @export var enemy_unit_scene: PackedScene = preload("uid://daib08ro8i7su")
@@ -398,12 +399,14 @@ func _select_lane(lane_number: int) -> void:
 	selected_lane = clamp(lane_number, 1, 3)
 
 	print("Selected Lane: ", selected_lane)
+	lane_selected.emit()
 
 	_update_hud()
 
 
 # Receives finished robot data and spawns the unit in the selected lane.
 func _on_robot_completed(unit_data: Dictionary) -> void:
+	await(lane_selected)
 	var lane = lane_dict[selected_lane]
 
 	if lane != null and lane.has_method("spawn_unit"):
