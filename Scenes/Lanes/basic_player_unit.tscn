@@ -167,7 +167,7 @@ color = Color(0.23810166, 0.26133683, 0.27383968, 1)
 polygon = PackedVector2Array(-13.262101, -9.818968, 9.536743e-07, -16.45002, 13.262109, -9.818968, 15.472455, 1.2327856, 11.051755, 12.284538, 9.536743e-07, 16.981533, -11.051751, 12.284538, -16, 1)
 
 [node name="AttackCooldown" type="Timer" parent="." unique_id=1212120893]
-wait_time = 0.1
+wait_time = 8.965
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=967561237]
 stream = SubResource("AudioStreamMP3_nyo6d")

@@ -66,6 +66,17 @@ var game_over_art: TextureRect = null
 var restart_button: Button = null
 var game_is_over: bool = false
 
+var enemy_data := {
+		"display_name": "Enemy",
+		"unit_type": "enemy",
+		"health": 60,
+		"damage": 20,
+		"attack_speed": 0.1,
+		"move_speed": 5,
+		"guide_move_speed": 0.01,
+		"behavior": "Weak little bastard :(",
+	}
+
 func _ready() -> void:
 	randomize()
 
@@ -527,7 +538,11 @@ func _on_spawn_timer_timeout() -> void:
 	var lane = lane_dict[rand_lane]
 
 	if lane != null and lane.has_method("spawn_unit"):
-		var new_enemy = lane.spawn_unit(enemy_unit_scene, "EnemyPath")
+		var new_enemy = lane.spawn_unit(
+				enemy_unit_scene,
+				"EnemyPath",
+				enemy_data,
+			)
 
 		if new_enemy != null:
 			_register_enemy_for_wave(new_enemy)

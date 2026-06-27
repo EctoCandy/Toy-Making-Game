@@ -12,8 +12,7 @@ signal health_changed
 signal died(unit: Unit, has_been_defeated: bool)
 signal player_damaged(damage)
 
-@export var max_health := 100.0 # temporary
-@export var mov_speed := 0.6 # temporary
+
 @export var follow_strength := 10.0
 @export var max_follow_range := 70.0
 @export var reconnecting_range := 50.0
@@ -23,11 +22,16 @@ var path_guide : Node2D
 
 var target_pos : Vector2
 var enemies_in_range: Array
-var health : float
 
 var is_away_from_guide := false
 var is_in_combat := false
 var is_dead := false
+
+var max_health : float
+var health : float
+var mov_speed : float
+var attack_speed : float
+
 
 @onready var attack_cooldown: Timer = $AttackCooldown
 @onready var pivot: Node2D = $Pivot
@@ -47,6 +51,7 @@ func _process(_delta: float) -> void:
 	# Reversing rigidbody rotation on pivot to keep interesting physics 
 	# behaviour but also have upright sprites >:)
 	pivot.rotation = -rotation
+	
 	
 	target_pos = path_guide.global_position
 	

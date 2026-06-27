@@ -38,29 +38,39 @@ var wind_amount: float = 0.0
 var is_winding: bool = false
 
 var head_unit_database: Dictionary = {
+	# To change a units speed, you need to fine tune both the move_speed and
+	# guide_move_speed. Use Debug -> Visible collision shape to help.
+	
+	# This is a first attempt at balancing the game change it however you feel
 	"Head1": {
 		"display_name": "Unit 1",
 		"unit_type": "unit_1",
-		"damage": 35,
-		"move_speed": 70,
-		"lane_cost": 1,
-		"behavior": "explode_on_contact"
+		"health": 100,
+		"damage": 2,
+		"attack_speed": 0.05,
+		"move_speed": 1,
+		"guide_move_speed": 0.07,
+		"behavior": "speedy boi"
 	},
 	"Head2": {
 		"display_name": "Unit 2",
 		"unit_type": "unit_2",
-		"damage": 20,
-		"move_speed": 55,
-		"lane_cost": 2,
-		"behavior": "ranged_projectile"
+		"health": 350,
+		"damage": 30,
+		"attack_speed": 0.5,
+		"move_speed": 0.4,
+		"guide_move_speed": 0.030,
+		"behavior": "balanced"
 	},
 	"Head3": {
 		"display_name": "Unit 3",
 		"unit_type": "unit_3",
-		"damage": 12,
-		"move_speed": 95,
-		"lane_cost": 1,
-		"behavior": "fast_melee"
+		"health": 550,
+		"damage": 50,
+		"attack_speed": 2.5,
+		"move_speed": 0.2,
+		"guide_move_speed": 0.014,
+		"behavior": "tank"
 	}
 }
 
@@ -83,6 +93,7 @@ func _ready() -> void:
 			starting_positions[head] = head.global_position
 
 			var unit_data: Dictionary = _get_unit_data_for_head(head)
+			
 			head.set_meta("unit_data", unit_data)
 
 	var minigame_finished_callable: Callable = Callable(self, "_on_minigame_finished")
@@ -347,7 +358,7 @@ func _complete_robot_from_head(head: Sprite2D) -> void:
 		return
 
 	var unit_data: Dictionary = _get_stored_unit_data(head).duplicate(true)
-
+	print(unit_data)
 	unit_data["head_node_name"] = head.name
 	unit_data["wind_up_power"] = wind_amount
 	unit_data["is_wound_up"] = true

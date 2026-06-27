@@ -2,7 +2,7 @@ extends PathFollow2D
 
 ## Handles the movement of the unit "Guide"
 
-@export var speed = 0.02
+@export var move_speed = 0.02
 
 var is_stopped := false
 var has_reached_frontline := false
@@ -18,7 +18,7 @@ func _process(delta: float) -> void:
 		and unit.is_in_combat == false
 		and has_reached_frontline == false
 	):
-		self.progress_ratio += speed * delta
+		self.progress_ratio += move_speed * delta
 	else:
 		pass
 	
