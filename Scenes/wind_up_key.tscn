@@ -20,6 +20,7 @@ texture = ExtResource("1_l8quu")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ClickableArea1" unique_id=627102442]
 position = Vector2(72.75, -0.5)
 shape = SubResource("RectangleShape2D_sc487")
+debug_color = Color(0.98847693, 0, 0.30675834, 0.41960785)
 
 [node name="ClickableArea2" type="Area2D" parent="." unique_id=485629990]
 

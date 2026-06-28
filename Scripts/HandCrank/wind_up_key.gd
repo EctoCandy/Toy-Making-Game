@@ -10,6 +10,7 @@ signal cranked(distance: float)
 var following_mouse: bool = false
 var max_rotation_speed_rad: float = 0.0
 var active: bool = false
+var area_2_hover : bool = false
 
 
 func _ready() -> void:
@@ -17,6 +18,9 @@ func _ready() -> void:
 
 	_connect_clickable_area("ClickableArea1")
 	_connect_clickable_area("ClickableArea2")
+	# Signals used to track which handle is selected
+	$ClickableArea2.mouse_entered.connect(clickable_area_2_entered)
+	$ClickableArea2.mouse_exited.connect(clickable_area_2_exited)
 
 	# The key should always start hidden until RobotBuilder turns it on.
 	set_enabled(false)
@@ -81,7 +85,12 @@ func _on_clickable_area_input(_viewport: Node, event: InputEvent, _shape_idx: in
 	if event is InputEventMouseButton:
 		var mouse_event: InputEventMouseButton = event as InputEventMouseButton
 
+	
+
 		if mouse_event.button_index == MOUSE_BUTTON_LEFT and mouse_event.pressed:
+			# Sweep rotation bugs under the rug
+			if area_2_hover:
+				rotation -= deg_to_rad(180)
 			following_mouse = true
 
 
@@ -107,3 +116,9 @@ func _physics_process(delta: float) -> void:
 	rotation += frame_rotation
 
 	cranked.emit(frame_rotation)
+
+func clickable_area_2_entered()  -> void:
+	area_2_hover = true
+
+func clickable_area_2_exited() -> void:
+	area_2_hover = false
