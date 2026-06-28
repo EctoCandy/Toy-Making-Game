@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dikk5ev77fmge"
+path="res://.godot/imported/melody alteration - inspo- snowdin town.mp3-e5f4088ac0a14fd2650adb2ccf583362.mp3str"
+
+[deps]
+
+source_file="res://Assets/Music and SFX/melody alteration - inspo- snowdin town.mp3"
+dest_files=["res://.godot/imported/melody alteration - inspo- snowdin town.mp3-e5f4088ac0a14fd2650adb2ccf583362.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
